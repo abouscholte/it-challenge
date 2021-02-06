@@ -1,0 +1,8 @@
+{
+    "name": "notenboom/api",
+    "description": "api for notenboom project for rapporting mistakes in school books",
+    "type": "project",
+    "require": {
+        "firebase/php-jwt": "^5.2"
+    }
+}
