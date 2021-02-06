@@ -19,6 +19,7 @@ ReactDOM.render(
         <Router basename={process.env.PUBLIC_URL}>
           <GlobalStyle />
           <App />
+          <p>Hello!</p>
         </Router>
       </Suspense>
     </ThemeProvider>
