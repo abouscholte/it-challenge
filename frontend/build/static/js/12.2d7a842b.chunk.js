@@ -1,2 +1,0 @@
-(this.webpackJsonpfrontend=this.webpackJsonpfrontend||[]).push([[12],{98:function(t,e,n){"use strict";n.r(e);n(0);var a=n(3),o=n(2);e.default=function(){return localStorage.clear(),Object(o.jsx)(a.a,{to:{pathname:"/account/inloggen",state:{alert:"U bent nu succesvol uitgelogd!"}}})}}}]);
-//# sourceMappingURL=12.2d7a842b.chunk.js.map

@@ -28,7 +28,7 @@ if (!empty($data->token) && !empty($data->id)) {
   $decoded_array = (array) $decoded;
 
   // check if user is admin or the correct user
-  if ($decoded_array['uid'] === $data->id || $decoded_array['adm'] === 1) {
+  if ($decoded_array['uid'] == $data->id || $decoded_array['adm'] == 1) {
     if (
       !empty($data->email) &&
       !empty($data->username) &&

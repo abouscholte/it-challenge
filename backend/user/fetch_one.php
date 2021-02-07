@@ -29,7 +29,7 @@ if (!empty($data->token) || !empty($data->id)) {
   $decoded_array = (array) $decoded;
   
   // check if the user is correct or admin
-  if ($decoded_array['adm'] === 1 || $decoded_array['uid'] === $data->id) {
+  if ($decoded_array['adm'] == 1 || $decoded_array['uid'] == $data->id) {
   
     // fetch id and query user
     $user->id = $data->id;

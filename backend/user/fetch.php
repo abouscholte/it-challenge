@@ -32,7 +32,7 @@ if (isset($data->token)) {
   $decoded_array = (array) $decoded;
 
   // check if the user requesting the data is actually admin
-  if ($decoded_array['adm'] === 1) {
+  if ($decoded_array['adm'] == 1) {
     $users_arr = array();
     $users_arr['users'] = array();
 

@@ -38,3 +38,30 @@ export const GuestRoute = ({ component: Component, ...rest }) => (
     }
   />
 )
+
+export const AdminRoute = ({ component: Component, ...rest }) => (
+  <Route
+    {...rest}
+    render={props =>
+      localStorage.getItem("currentUser") ? (
+        JSON.parse(localStorage.getItem("currentUser")).adm == 1 ? (
+          <Component {...props} />
+        ) : (
+          <Redirect 
+            to={{
+              pathname: "/fouten",
+              state: { alert: "U moet ingelogd zijn om deze pagina te kunnen bezoeken!" }
+            }}
+          />
+        )
+      ) : (
+        <Redirect 
+          to={{
+            pathname: "/account/inloggen",
+            state: { alert: "U moet ingelogd zijn om deze pagina te kunnen bezoeken!" }
+          }}
+        />
+      )
+    }
+  />
+)

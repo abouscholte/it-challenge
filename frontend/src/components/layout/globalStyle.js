@@ -54,6 +54,7 @@ const GlobalStyle = createGlobalStyle`
     text-decoration: none;
     border-radius: 5px;
     transition: box-shadow .3s;
+    outline: none;
     &:hover,
     &:focus {
       text-decoration: underline;
@@ -151,3 +152,65 @@ const GlobalStyle = createGlobalStyle`
 `
 
 export default GlobalStyle
+
+export const TableStyle = createGlobalStyle`
+  table.table {
+    --bs-table-bg: transparent;
+    --bs-table-striped-color: #212529;
+    --bs-table-striped-bg: rgba(0, 0, 0, 0.05);
+    --bs-table-active-color: #212529;
+    --bs-table-active-bg: rgba(0, 0, 0, 0.1);
+    --bs-table-hover-color: #212529;
+    --bs-table-hover-bg: rgba(0, 0, 0, 0.075);
+    width: 100%;
+    margin-bottom: 1rem;
+    color: #212529;
+    vertical-align: top;
+    border-color: #dee2e6;
+    caption-side: bottom;
+    border-collapse: collapse;
+    text-align: left;
+    display: table;
+    white-space: nowrap;
+    font-family: 'Barlow', sans-serif;
+  }
+
+  .table-container {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: scroll;
+  }
+
+  .table>tbody {
+    vertical-align: inherit;
+  }
+
+  tbody, td, tfoot, th, thead, tr {
+    border-color: inherit;
+    border-style: solid;
+    border-width: 0;
+  }
+
+  tbody tr {
+    cursor: pointer;
+    transition: .2s;
+    &:hover,
+    &:focus {
+      background: darken(#fff, 5%);
+    }
+    &:focus {
+      border-radius: 0 0 3px rgba(lightblue, .5);
+    }
+  }
+
+  .table>:not(:last-child)>:last-child>* {
+    border-bottom-color: currentColor;
+  }
+
+  .table>:not(caption)>*>* {
+    padding: .5rem .5rem;
+    background-color: var(--bs-table-bg);
+    background-image: linear-gradient(var(--bs-table-accent-bg),var(--bs-table-accent-bg));
+    border-bottom-width: 1px;
+  }
+`
