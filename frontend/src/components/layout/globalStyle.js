@@ -196,10 +196,10 @@ export const TableStyle = createGlobalStyle`
     transition: .2s;
     &:hover,
     &:focus {
-      background: darken(#fff, 5%);
+      background: ${props => props.theme.grey};
     }
     &:focus {
-      border-radius: 0 0 3px rgba(lightblue, .5);
+      border-radius: 0 0 3px ${props => props.theme.outline};
     }
   }
 

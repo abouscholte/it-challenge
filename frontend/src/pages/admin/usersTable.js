@@ -1,5 +1,6 @@
-import React, { useEffect } from "react"
+import React, { useEffect, useState } from "react"
 import { useHistory, useLocation } from "react-router-dom"
+import _ from "lodash"
 import { Link } from "react-router-dom"
 import { TableStyle } from "components/layout/globalStyle"
 import NavbarLarge from "components/layout/navbar/navbarLarge"
@@ -9,6 +10,7 @@ import { ArrowBackOutline } from "react-ionicons"
 
 function UsersTable(props) {
 
+  const [sorted, setSorted] = useState('old_to_new')
   const history = useHistory()
   const location = useLocation()
 
@@ -25,6 +27,11 @@ function UsersTable(props) {
     })
   }
 
+  function handleClick() {
+    setSorted((sorted == 'old_to_new') ? 'new_to_old' : 'old_to_new')
+    _.reverse(users)
+  }
+
   useEffect(() => document.title = 'Administrator Paneel - Notenboom')
   
   return (
@@ -36,7 +43,9 @@ function UsersTable(props) {
           <ArrowBackOutline color={'#ffffff'} height="16px" />
           &nbsp;Ga terug
         </Link></p>
-        <h1>{props.new_users ? 'Nieuwe gebruikers' : 'Alle gebruikers'}</h1>
+        <h1>{props.new_users ? 'Nieuwe gebruikers' : 'Alle gebruikers'}
+          <div className="small" onClick={() => handleClick()}>{(sorted == 'old_to_new') ? 'Sorteer van nieuw naar oud' : 'Sorteer van oud naar nieuw'}</div>
+        </h1>
 
         <div className="table-container">
           <table className="table">
