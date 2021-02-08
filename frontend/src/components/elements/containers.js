@@ -13,7 +13,7 @@ export const MainContainer = styled(Container)`
 
 export const GridContainer = styled(Container)`
   display: flex;
-  flex-wrap: nowrap;
+  flex-wrap: wrap;
   justify-content: space-between;
   @media screen and (max-width: 800px) {
     display: block;
@@ -42,4 +42,8 @@ export const GridColOneThird = styled(GridCol)`
 
 export const GridColTwoThirds = styled(GridCol)`
   width: 62%;
+`
+
+export const GridColFull = styled(GridCol)`
+  width: 100%;
 `

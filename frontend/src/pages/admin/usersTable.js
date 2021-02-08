@@ -5,7 +5,7 @@ import { Link } from "react-router-dom"
 import { TableStyle } from "components/layout/globalStyle"
 import NavbarLarge from "components/layout/navbar/navbarLarge"
 import DefaultPage from "components/layout/defaultPage"
-import FetchUsers from "components/users/fetchUsers"
+import FetchUsers from "components/users/fetch"
 import { ArrowBackOutline } from "react-ionicons"
 
 function UsersTable(props) {

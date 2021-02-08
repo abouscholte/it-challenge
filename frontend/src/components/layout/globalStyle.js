@@ -117,6 +117,16 @@ const GlobalStyle = createGlobalStyle`
     }
   }
 
+  a.button.button-unimportant {
+    background: ${props => props.theme.grey};
+    border-color: ${props => props.theme.darker_grey};
+    color: ${props => props.theme.text};
+    &:hover,
+    &:focus {
+      background: ${props => props.theme.inbetween_grey};
+    }
+  }
+
   a.button.button-back {
     display: flex;
     width: auto;

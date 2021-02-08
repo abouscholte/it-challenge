@@ -1,6 +1,6 @@
 import { useEffect } from "react"
 import { Link } from "react-router-dom"
-import FetchUsers from "components/users/fetchUsers"
+import FetchUsers from "components/users/fetch"
 import styled from "styled-components"
 import NavbarLarge from "components/layout/navbar/navbarLarge"
 import DefaultPage from "components/layout/defaultPage"

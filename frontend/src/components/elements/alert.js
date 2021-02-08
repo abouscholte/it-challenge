@@ -9,7 +9,7 @@ class Alert extends React.Component {
   
   render() {
     return (
-      <OuterAlert visible={this.props.visible} id="alert">
+      <OuterAlert {...this.props} visible={this.props.visible} id="alert">
         {this.props.text}
         <CloseAlert onClick={this.handleClick} href="#close-alert">&times;</CloseAlert>
       </OuterAlert>
@@ -29,7 +29,7 @@ const OuterAlert = styled.div`
   text-align: left;
   font-family: 'Barlow', sans-serif;
   max-width: 600px;
-  display: ${props => props.visible ? 'block' : 'none'}
+  display: ${props => props.visible ? 'block' : 'none'};
 `
 
 const CloseAlert = styled.a`

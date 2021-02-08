@@ -11,6 +11,7 @@ const Account = lazy(() => pMinDelay(import('./pages/account'), 200))
 const Logout = lazy(() => pMinDelay(import('./pages/account/logout'), 600))
 const Admin = lazy(() => pMinDelay(import('./pages/admin'), 200))
 const UsersTable = lazy(() => pMinDelay(import('./pages/admin/usersTable'), 200))
+const ControlUser = lazy(() => pMinDelay(import('./pages/admin/controlUser'), 200))
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
       <AdminRoute exact path="/admin" component={Admin} />
       <AdminRoute exact path="/admin/gebruikers/alle-gebruikers" component={UsersTable} />
       <AdminRoute exact path="/admin/gebruikers/nieuwe-gebruikers"><UsersTable new_users /></AdminRoute>
+      <AdminRoute exact path="/admin/gebruikers/:id" component={ControlUser} />
     </Switch>
   )
 }

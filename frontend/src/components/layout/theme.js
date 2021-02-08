@@ -12,7 +12,9 @@ const Theme = {
   shadow: 'rgba(0, 49, 98, 0.4)',
   link: '#06c',
   grey: '#eaecef',
-  darker_grey: '#cecece'
+  darker_grey: '#cecece',
+  inbetween_grey: '#e0e0e0',
+  darkest_grey: '#b7b7b7'
 }
 
 export default Theme
