@@ -32,7 +32,7 @@ function App() {
       <AdminRoute exact path="/admin" component={Admin} />
       <AdminRoute exact path="/admin/gebruikers/alle-gebruikers" component={UsersTable} />
       <AdminRoute exact path="/admin/gebruikers/nieuwe-gebruikers"><UsersTable new_users /></AdminRoute>
-      <AdminRoute exact path="/admin/gebruikers/:id" component={ControlUser} />
+      <AdminRoute exact path="/admin/gebruikers/gebruiker-:id" component={ControlUser} />
     </Switch>
   )
 }

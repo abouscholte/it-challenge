@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react"
 import _ from "lodash"
-import { useLocation } from "react-router-dom"
+import { useLocation, useHistory } from "react-router-dom"
 import { useForm } from "react-hook-form"
 import { Link } from "react-router-dom"
 import { trackPromise } from "react-promise-tracker"
@@ -20,6 +20,7 @@ import Alert from "components/elements/alert"
 function Account() {
 
   // set states and variables
+  const history = useHistory()
   const location = useLocation()
   const [alert, setAlert] = useState({ visible: (location.state ? true : false), alert: (location.state ? location.state.alert : null) })
   const [user, setUser] = useState({
@@ -76,6 +77,25 @@ function Account() {
         .catch((error) => console.error(error))
     )
   }
+
+  function deleteUser() {
+    _.assign(user, { token: localStorage.getItem('jwt-token') })
+    const body = JSON.stringify(user)
+
+    trackPromise (
+      fetch(`${process.env.REACT_APP_API_BASEURL}/user/delete.php`, { method: 'POST', body: body })
+        .then(async response => {
+          const data = await response.json()
+          setAlert({ visible: true, alert: data.error ? data.error : data.success })
+          setTimeout(() => {
+            history.push({
+              pathname: '/account/uitloggen'
+            })
+          }, 3000)
+        })
+        .catch((error) => console.error(error))
+    )
+  }
   
   return (
     <>
@@ -119,7 +139,7 @@ function Account() {
               </FormGroup>
               <FormSubmit type="submit" value="Wijzig account" tabIndex="4" className="button" />
               <FormLinks>
-                <Link className="danger" to="#">Verwijder account</Link>
+                <Link className="danger" to="#" onClick={() => deleteUser()}>Verwijder account</Link>
               </FormLinks>
             </form>
           )}

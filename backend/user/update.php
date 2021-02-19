@@ -34,9 +34,7 @@ if (!empty($data->id) && !empty($data->token)) {
     if (
       !empty($data->email) &&
       !empty($data->username) &&
-      !empty($data->password) &&
-      !empty($data->admin) &&
-      !empty($data->status)
+      !empty($data->password)
     ) {
       // fetch id and query user
       $user->id = $data->id;
@@ -54,7 +52,7 @@ if (!empty($data->id) && !empty($data->token)) {
           echo json_encode(array("error" => "Er bestaat al een gebruiker met dit e-mailadres, probeer een andere!"));
           return false;
         }
-      } 
+      }
       
       if ($data->username != $user->gebruikersnaam) {
         $user->gebruikersnaam = $data->username;
@@ -63,6 +61,7 @@ if (!empty($data->id) && !empty($data->token)) {
           echo json_encode(array("error" => "Er bestaat al een gebruiker met deze gebruikersnaam, probeer een andere!"));
           return false;
         }
+        echo json_encode(array("error" => "locatie 3"));
       }
 
       if ($error == 0) {
@@ -74,7 +73,7 @@ if (!empty($data->id) && !empty($data->token)) {
         $user->status = $data->status;
 
         if ($user->update()) {
-          echo json_encode(array("success" => "Je account is succesvol bijgewerkt!"));
+          echo json_encode(array("success" => ($decoded_array['uid'] == $data->id) ? 'UW account is succesvol bijgewerkt!' : 'Het account is succesvol bijgewerkt!'));
         } else {
           echo json_encode(array("error" => "Er is iets misgegaan bij het bijwerken van het account!"));
         }

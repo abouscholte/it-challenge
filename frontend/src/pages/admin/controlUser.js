@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react"
 import styled from "styled-components"
-import { Link, useLocation } from "react-router-dom"
+import _ from "lodash"
+import { Link, useLocation, useHistory } from "react-router-dom"
 import { ArrowBackOutline } from "react-ionicons"
 import FetchUser from "components/users/fetchOne"
 import NotFound from "pages/notFound"
 import DefaultPage from "components/layout/defaultPage"
 import NavbarLarge from "components/layout/navbar/navbarLarge"
+import { trackPromise } from "react-promise-tracker"
 import { GridColOneThird, GridColTwoThirds, GridColFull } from "components/elements/containers"
 import { useForm } from "react-hook-form"
 import {
@@ -21,12 +23,77 @@ import Alert from "components/elements/alert"
 function ControlUser() {
 
   const user = FetchUser()
+  const history = useHistory()
   const location = useLocation()
   const back = location.state ? location.state.from : null
 
   const [alert, setAlert] = useState({ visible: false, alert: null })
   const { register, handleSubmit, errors } = useForm()
-  const onSubmit = data => console.log(data)
+  const onSubmit = data => {
+    _.assign(user, data)
+    _.assign(user, { token: localStorage.getItem('jwt-token') })
+    const body = JSON.stringify(user)
+    console.log(body)
+
+    trackPromise (
+      fetch(`${process.env.REACT_APP_API_BASEURL}/user/update.php`, {
+        method: 'POST', body: body
+      })
+        .then(async response => {
+          const data = await response.json()
+          // set alert
+          setAlert({ visible: true, alert: data.error ? data.error : data.success })
+        })
+        .catch((error) => console.log(error))
+    )
+  }
+
+  function updateAdmin() {
+    _.assign(user, { admin: (user.admin == 0) ? 1 : 0, token: localStorage.getItem('jwt-token') });
+    const body = JSON.stringify(user)
+
+    trackPromise (
+      fetch(`${process.env.REACT_APP_API_BASEURL}/user/update.php`, { method: 'POST', body: body })
+        .then(async response => {
+          const data = await response.json()
+          setAlert({ visible: true, alert: data.error ? data.error : (user.admin == 1) ? 'Dit account is nu een administrator' : 'Dit account is niet meer een administrator' })
+        })
+        .catch((error) => console.error(error))
+    )
+  }
+
+  function updateStatus() {
+    _.assign(user, { admin: (user.status == 0) ? 1 : 0, token: localStorage.getItem('jwt-token') });
+    const body = JSON.stringify(user)
+
+    trackPromise (
+      fetch(`${process.env.REACT_APP_API_BASEURL}/user/update.php`, { method: 'POST', body: body })
+        .then(async response => {
+          const data = await response.json()
+          setAlert({ visible: true, alert: data.error ? data.error : (user.status == 1) ? 'Dit account is nu goedgekeurd' : 'Dit account is niet meer goedgekeurd' })
+        })
+        .catch((error) => console.error(error))
+    )
+  }
+  
+  function deleteUser() {
+    _.assign(user, { token: localStorage.getItem('jwt-token') })
+    const body = JSON.stringify(user)
+
+    trackPromise (
+      fetch(`${process.env.REACT_APP_API_BASEURL}/user/delete.php`, { method: 'POST', body: body })
+        .then(async response => {
+          const data = await response.json()
+          setAlert({ visible: true, alert: data.error ? data.error : data.success })
+          setTimeout(() => {
+            history.push({
+              pathname: back ? back : '/admin'
+            })
+          }, 3000)
+        })
+        .catch((error) => console.error(error))
+    )
+  }
 
   useEffect(() => {
     if (location.state && location.state.alert) {
@@ -62,8 +129,8 @@ function ControlUser() {
                 </p>
 
                 <ButtonGroup>
-                  <Link to="#">{(user.status == 1) ? 'Keur gebruiker niet meer goed' : 'Keur gebruiker goed'}</Link>
-                  <Link to="#">{(user.admin == 1) ? 'Maak niet meer administrator' : 'Maak administrator'}</Link>
+                  <Link to="#" onClick={() => updateStatus()}>{(user.status == 1) ? 'Keur gebruiker niet meer goed' : 'Keur gebruiker goed'}</Link>
+                  <Link to="#" onClick={() => updateAdmin()}>{(user.admin == 1) ? 'Maak niet meer administrator' : 'Maak administrator'}</Link>
                 </ButtonGroup>
 
                 <SmallText>
@@ -110,7 +177,7 @@ function ControlUser() {
                   </FormGroup>
                   <FormSubmit type="submit" value="Wijzig account" tabIndex="4" className="button" />
                   <FormLinks>
-                    <Link className="danger" to="#">Verwijder account</Link>
+                    <Link className="danger" to="#" onClick={() => deleteUser()}>Verwijder account</Link>
                   </FormLinks>
                 </form>
               </GridColTwoThirds>

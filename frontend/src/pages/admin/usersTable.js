@@ -20,7 +20,7 @@ function UsersTable(props) {
 
   function selectUser(id) {
     history.push({
-      pathname: `/admin/gebruikers/${id}`,
+      pathname: `/admin/gebruikers/gebruiker-${id}`,
       state: {
         from: location.pathname
       }

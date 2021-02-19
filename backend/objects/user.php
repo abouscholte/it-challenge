@@ -141,11 +141,7 @@ class User {
     $stmt->bindParam(":wachtwoord", $this->wachtwoord);
 
     // execute query
-    if ($stmt->execute()) {
-      return true;
-    }
-
-    return false;
+    return ($stmt->execute()) ? true : false;
   }
 
 
@@ -153,7 +149,7 @@ class User {
   function update() {
     $query = "UPDATE " . $this->table_name . "
               SET
-                email=:email, gebruikersnaam=:gebruikersnaam, naam=:naam
+                email=:email, gebruikersnaam=:gebruikersnaam, naam=:naam, admin=:admin, status=:status
               WHERE id=:id";
 
     // prepare query
@@ -168,13 +164,25 @@ class User {
     $stmt->bindParam(":email", $this->email);
     $stmt->bindParam(":gebruikersnaam", $this->gebruikersnaam);
     $stmt->bindParam(":naam", $this->naam);
+    $stmt->bindParam(":admin", $this->admin);
+    $stmt->bindParam(":status", $this->status);
     $stmt->bindParam(":id", $this->id);
 
     // execute query
-    if ($stmt->execute()) {
-      return true;
-    }
+    return ($stmt->execute()) ? true : false;
+  }
 
-    return false;
+  // delete user
+  // returns true if deletion was succesfull
+  function delete() {
+    $query = "DELETE FROM " . $this->table_name . "
+              WHERE id=:id";
+
+    // prepare query and bind value
+    $stmt = $this->conn->prepare($query);
+    $stmt->bindParam(":id", $this->id);
+
+    // execute query
+    return ($stmt->execute()) ? true : false;
   }
 }
