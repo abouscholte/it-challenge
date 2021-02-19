@@ -60,8 +60,9 @@ function Account() {
 
   // update account form submit
   const onSubmit = data => {
-    _.assign(data, { id: user.id, token: localStorage.getItem('jwt-token') })
-    const fetchBody = JSON.stringify(data)
+    _.assign(user, data)
+    _.assign(user, { token: localStorage.getItem('jwt-token') })
+    const fetchBody = JSON.stringify(user)
 
     trackPromise (
       fetch(`${process.env.REACT_APP_API_BASEURL}/user/update.php`, {

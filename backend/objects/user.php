@@ -3,16 +3,16 @@
 class User {
   // database connection and table name
   private $conn;
-  private $table_name = "users";
+  private $table_name = "gebruikers";
 
   // object properties
   public $id;
   public $email;
-  public $username;
-  public $name;
-  public $password;
+  public $gebruikersnaam;
+  public $naam;
+  public $wachtwoord;
   public $code;
-  public $code_created;
+  public $code_aangemaakt;
   public $admin;
   public $status;
 
@@ -46,44 +46,58 @@ class User {
     // fetch user and set values 
     $row = $stmt->fetch(PDO::FETCH_ASSOC);
     $this->email = $row['email'];
-    $this->username = $row['username'];
-    $this->name = $row['name'];
-    $this->password = $row['password'];
+    $this->gebruikersnaam = $row['gebruikersnaam'];
+    $this->naam = $row['naam'];
+    $this->wachtwoord = $row['wachtwoord'];
     $this->code = $row['code'];
-    $this->code_created = $row['code_created'];
+    $this->code_aangemaakt = $row['code_aangemaakt'];
     $this->admin = $row['admin'];
     $this->status = $row['status'];
   }
 
-  // check if user exists by username and password
+  // check if user exists by email
   // returns true if user exists
-  function check_user() {
+  function check_user_email() {
     $query = "SELECT id
               FROM " . $this->table_name . "
-              WHERE username=:username OR email=:email";
+              WHERE email=:email";
 
     // prepare and execute query statement
     $stmt = $this->conn->prepare($query);
 
-    $stmt->bindParam(":username", $this->username);
     $stmt->bindParam(":email", $this->email);
     $stmt->execute();
 
     // check if a user was found
-    if ($stmt->rowCount() > 0) {
-      return true;
-    }
+    return ($stmt->rowCount() > 0) ? true : false;
+  }
 
-    return false;
+
+  // check if user exists by username
+  // returns true if user exists
+  function check_user_username() {
+    $query = "SELECT id
+              FROM " . $this->table_name . "
+              WHERE gebruikersnaam=:gebruikersnaam";
+    
+    // prepare and execute query statement
+    $stmt = $this->conn->prepare($query);
+
+    $stmt->bindParam(":gebruikersnaam", $this->gebruikersnaam);
+    $stmt->execute();
+
+    // check if a user was found
+    return ($stmt->rowCount() > 0) ? true : false;
   }
 
 
   // check if user exists by useremail data
   // returns user if exists
+  // this function is used for login only
   function check_useremail() {
     $query = "SELECT *
               FROM " . $this->table_name . "
-              WHERE username=:useremail OR email=:useremail";
+              WHERE gebruikersnaam=:useremail OR email=:useremail";
 
     // prepare and execute query and bind params
     $stmt = $this->conn->prepare($query);
@@ -94,11 +108,11 @@ class User {
     $row = $stmt->fetch(PDO::FETCH_ASSOC);
     $this->id = $row['id'];
     $this->email = $row['email'];
-    $this->username = $row['username'];
-    $this->name = $row['name'];
-    $this->password = $row['password'];
+    $this->username = $row['gebruikersnaam'];
+    $this->name = $row['naam'];
+    $this->password = $row['wachtwoord'];
     $this->code = $row['code'];
-    $this->code_created = $row['code_created'];
+    $this->code_created = $row['code_aangemaakt'];
     $this->admin = $row['admin'];
     $this->status = $row['status'];
   }
@@ -109,22 +123,22 @@ class User {
     $query = "INSERT INTO
                 " . $this->table_name . "
               SET
-                email=:email, username=:username, name=:name, password=:password, status=0, admin=0";
+                email=:email, gebruikersnaam=:gebruikersnaam, naam=:naam, wachtwoord=:wachtwoord, status=0, admin=0";
     
     // prepare query
     $stmt = $this->conn->prepare($query);
 
     // sanitize
     $this->email = htmlspecialchars(strip_tags($this->email));
-    $this->username = htmlspecialchars(strip_tags($this->username));
-    $this->name = htmlspecialchars(strip_tags($this->name));
-    $this->password = password_hash($this->password, PASSWORD_BCRYPT);
+    $this->gebruikersnaam = htmlspecialchars(strip_tags($this->gebruikersnaam));
+    $this->naam = htmlspecialchars(strip_tags($this->naam));
+    $this->wachtwoord = password_hash($this->wachtwoord, PASSWORD_BCRYPT);
 
     // bind values
     $stmt->bindParam(":email", $this->email);
-    $stmt->bindParam(":username", $this->username);
-    $stmt->bindParam(":name", $this->name);
-    $stmt->bindParam(":password", $this->password);
+    $stmt->bindParam(":gebruikersnaam", $this->gebruikersnaam);
+    $stmt->bindParam(":naam", $this->naam);
+    $stmt->bindParam(":wachtwoord", $this->wachtwoord);
 
     // execute query
     if ($stmt->execute()) {
@@ -139,7 +153,7 @@ class User {
   function update() {
     $query = "UPDATE " . $this->table_name . "
               SET
-                email=:email, username=:username, name=:name
+                email=:email, gebruikersnaam=:gebruikersnaam, naam=:naam
               WHERE id=:id";
 
     // prepare query
@@ -147,13 +161,13 @@ class User {
 
     // sanitize
     $this->email = htmlspecialchars(strip_tags(($this->email)));
-    $this->username = htmlspecialchars(strip_tags(($this->username)));
-    $this->name = htmlspecialchars(strip_tags($this->name));
+    $this->gebruikersnaam = htmlspecialchars(strip_tags(($this->gebruikersnaam)));
+    $this->naam = htmlspecialchars(strip_tags($this->naam));
 
     // bind values
     $stmt->bindParam(":email", $this->email);
-    $stmt->bindParam(":username", $this->username);
-    $stmt->bindParam(":name", $this->name);
+    $stmt->bindParam(":gebruikersnaam", $this->gebruikersnaam);
+    $stmt->bindParam(":naam", $this->naam);
     $stmt->bindParam(":id", $this->id);
 
     // execute query

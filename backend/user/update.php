@@ -21,40 +21,63 @@ use \Firebase\JWT\JWT;
 // get the posted data and make sure the data is not empty
 $data = json_decode(file_get_contents("php://input"));
 
-// validate json web token
-if (!empty($data->token) && !empty($data->id)) {
+// check if id and jwt token were given
+if (!empty($data->id) && !empty($data->token)) {
+  // get secret key and decode jwt token
   $key = $config->jwt_secret;
   $decoded = JWT::decode($data->token, $key, array('HS256'));
+
   $decoded_array = (array) $decoded;
 
-  // check if user is admin or the correct user
-  if ($decoded_array['uid'] == $data->id || $decoded_array['adm'] == 1) {
+  // check if the user is correct or admin
+  if ($decoded_array['adm'] == 1 || $decoded_array['uid'] == $data->id) {
     if (
       !empty($data->email) &&
       !empty($data->username) &&
-      !empty($data->name)
+      !empty($data->password) &&
+      !empty($data->admin) &&
+      !empty($data->status)
     ) {
+      // fetch id and query user
       $user->id = $data->id;
-      $user->email = $data->email;
-      $user->username = $data->username;
-      $user->name = $data->name;
-        
-      // check if user already exists
-      if ($user->check_user()) {
-        // user exists, update user
-        if ($user->update()) {
-          // set http response code and send message
-          http_response_code(200);
-          echo json_encode(array("success" => ($decoded_array['uid'] === $data->id) ? "Uw account is succesvol geüpdatet!" : "Het account is succesvol geüpdatet!"));
-        } else {
-          // no success in updating user
-          http_response_code(400);
-          echo json_encode(array("error" => "Er is iets foutgegaan bij het updaten van uw account!"));
+      $stmt = $user->read_single();
+
+      unset($data->token);
+      
+      // check if email was updated and check if email already exists
+      $error = 0;
+
+      if ($data->email != $user->email) {
+        $user->email = $data->email;
+        if ($user->check_user_email()) {
+          $error = 1;
+          echo json_encode(array("error" => "Er bestaat al een gebruiker met dit e-mailadres, probeer een andere!"));
+          return false;
         }
-      } else {
-        // no user was found, set http code and message
-        http_response_code(400);
-        echo json_encode(array("error" => "Er is geen gebruiker gevonden met deze gegevens!"));
+      } 
+      
+      if ($data->username != $user->gebruikersnaam) {
+        $user->gebruikersnaam = $data->username;
+        if ($user->check_user_username()) {
+          $error = 1;
+          echo json_encode(array("error" => "Er bestaat al een gebruiker met deze gebruikersnaam, probeer een andere!"));
+          return false;
+        }
+      }
+
+      if ($error == 0) {
+        // update user
+        $user->email = $data->email;
+        $user->gebruikersnaam = $data->username;
+        $user->wachtwoord = $data->password;
+        $user->admin = $data->admin;
+        $user->status = $data->status;
+
+        if ($user->update()) {
+          echo json_encode(array("success" => "Je account is succesvol bijgewerkt!"));
+        } else {
+          echo json_encode(array("error" => "Er is iets misgegaan bij het bijwerken van het account!"));
+        }
       }
     }
   }

@@ -25,15 +25,21 @@ if (
 ) {
   // set user property values
   $user->email = $data->email;
-  $user->username = $data->username;
-  $user->name = $data->name;
-  $user->password = $data->password;
+  $user->gebruikersnaam = $data->username;
+  $user->naam = $data->name;
+  $user->wachtwoord = $data->password;
 
   // check if user already exists
-  if ($user->check_user()) {
+  if ($user->check_user_email()) {
     // user already exists, return message
     http_response_code(400);
-    echo json_encode(array("error" => "Een gebruiker met deze gegevens bestaat al. Log in of probeer andere gegevens!"));
+    echo json_encode(array("error" => "Een gebruiker met dit e-mailadres bestaat al. Log in of probeer andere gegevens!"));
+    return false;
+  } else if ($user->check_user_username()) {
+    // user already exists, return message
+    http_response_code(400);
+    echo json_encode(array("error" => "Een gebruiker met deze gebruikersnaam bestaat al. Log in of probeer andere gegevens!"));
+    return false;
   } else {
     // create the user
     if ($user->create()) {

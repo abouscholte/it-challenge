@@ -43,11 +43,11 @@ if (isset($data->token)) {
       $user = array(
         "id" => $id,
         "email" => $email,
-        "username" => $username,
-        "name" => $name,
-        "password" => $password,
+        "username" => $gebruikersnaam,
+        "name" => $naam,
+        "password" => $wachtwoord,
         "code" => $code,
-        "code_created" => $code_created,
+        "code_created" => $code_aangemaakt,
         "admin" => $admin,
         "status" => $status
       );

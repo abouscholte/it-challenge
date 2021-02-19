@@ -22,7 +22,7 @@ $user = new User($db);
 // get posted data and decode jwt key
 $data = json_decode(file_get_contents("php://input"));
 
-if (!empty($data->token) || !empty($data->id)) {
+if (!empty($data->token) && !empty($data->id)) {
   $key = $config->jwt_secret;
   $decoded = JWT::decode($data->token, $key, array('HS256'));
 
@@ -36,15 +36,15 @@ if (!empty($data->token) || !empty($data->id)) {
     $stmt = $user->read_single();
 
     // check if user was found
-    if ($user->username != null) {
+    if ($user->gebruikersnaam != null) {
       $user_arr = array(
         "id" => $user->id,
         "email" => $user->email,
-        "username" => $user->username,
-        "name" => $user->name,
-        "password" => $user->password,
+        "username" => $user->gebruikersnaam,
+        "name" => $user->naam,
+        "password" => $user->wachtwoord,
         "code" => $user->code,
-        "code_created" => $user->code_created,
+        "code_created" => $user->code_aangemaakt,
         "admin" => $user->admin,
         "status" => $user->status
       );

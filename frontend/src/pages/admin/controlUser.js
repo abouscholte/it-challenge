@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react"
 import styled from "styled-components"
-import { Link, useLocation, useParams } from "react-router-dom"
+import { Link, useLocation } from "react-router-dom"
 import { ArrowBackOutline } from "react-ionicons"
 import FetchUser from "components/users/fetchOne"
 import NotFound from "pages/notFound"
@@ -22,7 +22,6 @@ function ControlUser() {
 
   const user = FetchUser()
   const location = useLocation()
-  const params = useParams()
   const back = location.state ? location.state.from : null
 
   const [alert, setAlert] = useState({ visible: false, alert: null })
