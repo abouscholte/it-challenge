@@ -61,7 +61,6 @@ if (!empty($data->id) && !empty($data->token)) {
           echo json_encode(array("error" => "Er bestaat al een gebruiker met deze gebruikersnaam, probeer een andere!"));
           return false;
         }
-        echo json_encode(array("error" => "locatie 3"));
       }
 
       if ($error == 0) {
@@ -73,7 +72,7 @@ if (!empty($data->id) && !empty($data->token)) {
         $user->status = $data->status;
 
         if ($user->update()) {
-          echo json_encode(array("success" => ($decoded_array['uid'] == $data->id) ? 'UW account is succesvol bijgewerkt!' : 'Het account is succesvol bijgewerkt!'));
+          echo json_encode(array("success" => ($decoded_array['uid'] == $data->id) ? 'Uw account is succesvol bijgewerkt!' : 'Het account is succesvol bijgewerkt!'));
         } else {
           echo json_encode(array("error" => "Er is iets misgegaan bij het bijwerken van het account!"));
         }

@@ -33,7 +33,6 @@ function ControlUser() {
     _.assign(user, data)
     _.assign(user, { token: localStorage.getItem('jwt-token') })
     const body = JSON.stringify(user)
-    console.log(body)
 
     trackPromise (
       fetch(`${process.env.REACT_APP_API_BASEURL}/user/update.php`, {
