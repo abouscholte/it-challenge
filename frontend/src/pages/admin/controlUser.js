@@ -30,6 +30,8 @@ function ControlUser() {
   const [alert, setAlert] = useState({ visible: false, alert: null })
   const { register, handleSubmit, errors } = useForm()
   const onSubmit = data => {
+    setAlert({ visible: false, alert: null  })
+    
     _.assign(user, data)
     _.assign(user, { token: localStorage.getItem('jwt-token') })
     const body = JSON.stringify(user)
@@ -48,6 +50,8 @@ function ControlUser() {
   }
 
   function updateAdmin() {
+    setAlert({ visible: false, alert: null  })
+    
     _.assign(user, { admin: (user.admin == 0) ? 1 : 0, token: localStorage.getItem('jwt-token') });
     const body = JSON.stringify(user)
 
@@ -62,7 +66,9 @@ function ControlUser() {
   }
 
   function updateStatus() {
-    _.assign(user, { admin: (user.status == 0) ? 1 : 0, token: localStorage.getItem('jwt-token') });
+    setAlert({ visible: false, alert: null  })
+    
+    _.assign(user, { status: (user.status == 0) ? 1 : 0, token: localStorage.getItem('jwt-token') });
     const body = JSON.stringify(user)
 
     trackPromise (

@@ -46,35 +46,40 @@ function UsersTable(props) {
         <h1>{props.new_users ? 'Nieuwe gebruikers' : 'Alle gebruikers'}
           <div className="small" onClick={() => handleClick()}>{(sorted == 'old_to_new') ? 'Sorteer van nieuw naar oud' : 'Sorteer van oud naar nieuw'}</div>
         </h1>
-
-        <div className="table-container">
-          <table className="table">
-            <thead>
-              <tr>
-                <th scope="col">#</th>
-                <th scope="col">Gebruikersnaam</th>
-                <th scope="col">E-mailadres</th>
-                <th scope="col">Volledige naam</th>
-                <th scope="col">Status</th>
-              </tr>
-            </thead>
-            <tbody>
-              {
-                tableUsers.map((user, i) => {
-                  return (
-                    <tr key={i} onClick={() => selectUser(user.id)} tabIndex={i}>
-                      <th scope="col">{user.id}</th>
-                      <td>{user.username}</td>
-                      <td>{user.email}</td>
-                      <td>{user.name}</td>
-                      <td>{user.status == 1 ? 'Goedgekeurd' : 'Niet goedgekeurd'}</td>
-                    </tr>
-                  )
-                })
-              }
-            </tbody>
-          </table>
-        </div>
+        {
+          (tableUsers.length > 0) ? (
+            <div className="table-container">
+              <table className="table">
+                <thead>
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Gebruikersnaam</th>
+                    <th scope="col">E-mailadres</th>
+                    <th scope="col">Volledige naam</th>
+                    <th scope="col">Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {
+                    tableUsers.map((user, i) => {
+                      return (
+                        <tr key={i} onClick={() => selectUser(user.id)} tabIndex={i}>
+                          <th scope="col">{user.id}</th>
+                          <td>{user.username}</td>
+                          <td>{user.email}</td>
+                          <td>{user.name}</td>
+                          <td>{user.status == 1 ? 'Goedgekeurd' : 'Niet goedgekeurd'}</td>
+                        </tr>
+                      )
+                    })
+                  }
+                </tbody>
+              </table>
+            </div>
+          ) : (
+            <p className="large">{props.new_users ? 'Geen nieuwe gebruikers gevonden' : 'Geen gebruikers gevonden'}</p>
+          )
+        }
       </DefaultPage>
     </>
   )

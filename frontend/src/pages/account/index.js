@@ -61,13 +61,16 @@ function Account() {
 
   // update account form submit
   const onSubmit = data => {
+    setAlert({ visible: false, alert: null  })
+    
     _.assign(user, data)
     _.assign(user, { token: localStorage.getItem('jwt-token') })
-    const fetchBody = JSON.stringify(user)
+    const body = JSON.stringify(user)
+    console.log(body)
 
     trackPromise (
       fetch(`${process.env.REACT_APP_API_BASEURL}/user/update.php`, {
-        method: 'POST', body: fetchBody
+        method: 'POST', body: body
       })
         .then(async response => {
           const fetchData = await response.json()

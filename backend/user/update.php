@@ -66,6 +66,7 @@ if (!empty($data->id) && !empty($data->token)) {
       if ($error == 0) {
         // update user
         $user->email = $data->email;
+        $user->naam = $data->name;
         $user->gebruikersnaam = $data->username;
         $user->wachtwoord = $data->password;
         $user->admin = $data->admin;

@@ -6,7 +6,7 @@ export const PrivateRoute = ({ component: Component, ...rest }) => (
     {...rest}
     render={props =>
       localStorage.getItem("currentUser") ? (
-        JSON.parse(localStorage.getItem("currentUser")).sta == 1 ? (
+        (JSON.parse(localStorage.getItem("currentUser")).sta == 1) ? (
           <Component {...props} />
         ) : (
           <Redirect to="/account/account-niet-goedgekeurd" />

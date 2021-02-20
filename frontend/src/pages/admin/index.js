@@ -24,6 +24,7 @@ function Admin() {
       <DefaultPage title="Administrator Paneel" grid>
         <GridColHalf>
           <SectionTitle>Beheer foutenrapportages</SectionTitle>
+          <SectionTitle>Beheer boeken</SectionTitle>
         </GridColHalf>
         <GridColHalf>
           <SectionTitle>Beheer gebruikers</SectionTitle>
