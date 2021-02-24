@@ -10,14 +10,21 @@ import { ArrowBackOutline } from "react-ionicons"
 
 function UsersTable(props) {
 
+  // set state and other constants from hooks
   const [sorted, setSorted] = useState('old_to_new')
   const history = useHistory()
   const location = useLocation()
 
+  // set page title
+  useEffect(() => document.title = 'Administrator Paneel - Notenboom')
+
+  // set users (depending on prop)
   const users = FetchUsers()
   const filtered_users = users.filter((obj) => obj.status == 0)
   const tableUsers = props.new_users ? filtered_users : users
 
+  // function for clicking on table row
+  // redirect to that users control view
   function selectUser(id) {
     history.push({
       pathname: `/admin/gebruikers/gebruiker-${id}`,
@@ -27,18 +34,21 @@ function UsersTable(props) {
     })
   }
 
+  // function for filtering table
   function handleClick() {
     setSorted((sorted == 'old_to_new') ? 'new_to_old' : 'old_to_new')
     _.reverse(users)
   }
-
-  useEffect(() => document.title = 'Administrator Paneel - Notenboom')
   
   return (
     <>
+      {/* render styles for table and default navbar */}
       <TableStyle />
       <NavbarLarge />
+
+      {/* render default page */}
       <DefaultPage title={props.new_users ? 'Nieuwe gebruikers' : 'Alle gebruikers'}>
+        {/* top section of page with back button and title */}
         <p><Link to="/admin" className="button button-back">
           <ArrowBackOutline color={'#ffffff'} height="16px" />
           &nbsp;Ga terug
@@ -46,6 +56,8 @@ function UsersTable(props) {
         <h1>{props.new_users ? 'Nieuwe gebruikers' : 'Alle gebruikers'}
           <div className="small" onClick={() => handleClick()}>{(sorted == 'old_to_new') ? 'Sorteer van nieuw naar oud' : 'Sorteer van oud naar nieuw'}</div>
         </h1>
+
+        {/* table */}
         {
           (tableUsers.length > 0) ? (
             <div className="table-container">

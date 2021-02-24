@@ -2,21 +2,9 @@ import React, { useEffect, useState } from "react"
 import _ from "lodash"
 import { useLocation, useHistory } from "react-router-dom"
 import { useForm } from "react-hook-form"
-import { Link } from "react-router-dom"
 import { trackPromise } from "react-promise-tracker"
-import NavbarLarge from "components/layout/navbar/navbarLarge"
-import DefaultPage from "components/layout/defaultPage"
-import { GridColOneThird, GridColTwoThirds } from "components/elements/containers"
-import {
-  FormGroup,
-  FormControl,
-  FormControlError,
-  FormLabel,
-  FormSubmit,
-  FormLinks
-} from "components/elements/forms"
-import Alert from "components/elements/alert"
-import Modal from "components/elements/modal"
+
+import AccountIndex from "components/pages/account/accountIndex"
 
 function Account() {
 
@@ -110,78 +98,18 @@ function Account() {
     setShowModal(false)
   }
   
-  return (
-    <>
-      <NavbarLarge />
-      <DefaultPage grid title="Uw account">
-        <GridColTwoThirds>
-          <Alert visible={alert.visible} text={alert.alert} />
-          <h1>Wijzig account gegevens</h1>
-          {user && (
-            <form onSubmit={handleSubmit(onSubmit)}>
-              <FormGroup>
-                <FormLabel htmlFor="email">Wijzig uw e-mailadres</FormLabel>
-                <FormControl name="email" type="email" id="email" defaultValue={user.email} className={errors.email && "error"} ref={register({
-                  required: "Dit veld is verplicht!",
-                  pattern: {
-                    value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                    message: "Ongeldig e-mailadres, probeer een andere!"
-                  }
-                })} />
-                {errors.email && <FormControlError>{errors.email.message}</FormControlError>}
-              </FormGroup>
-              <FormGroup>
-                <FormLabel htmlFor="username">Wijzig uw gebruikersnaam</FormLabel>
-                <FormControl name="username" type="username" id="username" defaultValue={user.username} className={errors.username && "error"} ref={register({
-                  required: "Dit veld is verplicht!",
-                  minLength: {
-                    value: 3,
-                    message: "Gebruikersnaam moet bestaan uit minimaal 3 tekens!"
-                  },
-                  maxLength: {
-                    value: 20,
-                    message: "Gebruikersnaam moet bestaan uit maximaal 20 tekens!"
-                  }
-                })} />
-                {errors.username && <FormControlError>{errors.username.message}</FormControlError>}
-              </FormGroup>
-              <FormGroup>
-                <FormLabel htmlFor="name">Wijzig uw naam</FormLabel>
-                <FormControl name="name" type="name" id="name" defaultValue={user.name} ref={register({ required: "Dit veld is verplicht!" })} className={errors.name && "error"} />
-                {errors.name && <FormControlError>{errors.name.message}</FormControlError>}
-              </FormGroup>
-              <FormSubmit type="submit" value="Wijzig account" tabIndex="4" className="button" />
-              <FormLinks>
-                <Link className="danger" to="#" onClick={() => modalVisible()}>Verwijder account</Link>
-              </FormLinks>
-            </form>
-          )}
-        </GridColTwoThirds>
-        <GridColOneThird>
-          {user.admin === '1' && (
-            <div id="admin">
-              <h1>Administrator</h1>
-              <p>U bent een administrator. Hierdoor heeft u bevoegdheid om gebruikers te bekijken en beheren en suggesties voor aanpassingen in lesboeken te accepteren. Gebruik de knop hieronder om naar het administrator paneel te gaan.</p>
-              <Link className="button" to="/admin" style={{ marginBottom: '30px' }}>Administrator paneel</Link>
-            </div>
-          )}
-          <h1>Uw aanpassingen</h1>
-          <p>U heeft nog geen aanpassingen aan lesboeken gemaakt.</p>
-        </GridColOneThird>
-        <Modal 
-          show={showModal}
-          handleClose={modalInvisible}
-          actionButton={true}
-          actionButtonText="Verwijder"
-          actionButtonClassName="danger"
-          actionButtonOnClick={() => deleteUser()}
-        >
-          <h2 style={{ margin: 0, marginBottom: 10 }}>Weet u zeker dat u uw account wilt verwijderen?</h2>
-          <p>U kunt hierna niet meer terug. Al uw gegevens worden verwijderd. Weet u dit zeker?</p>
-        </Modal>
-      </DefaultPage>
-    </>
-  )
+  return <AccountIndex
+    alert={alert}
+    user={user}
+    handleSubmit={handleSubmit}
+    onSubmit={onSubmit}
+    register={register}
+    errors={errors}
+    modalVisible={modalVisible}
+    modalInvisible={modalInvisible}
+    showModal={showModal}
+    deleteUser={deleteUser}
+  />
 }
 
 export default Account

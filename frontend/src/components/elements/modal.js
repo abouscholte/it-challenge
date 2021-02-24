@@ -7,7 +7,7 @@ function Modal(props) {
 
   return (
     <OuterModal className={showHideClassName}>
-      <ModalMain>
+      <ModalMain onClick={props.handleClose}>
         {props.children}
         <Link className="button" onClick={props.handleClose} to="#">
           {props.actionButton ? 'Annuleer' : 'Sluit'}
@@ -30,6 +30,7 @@ const OuterModal = styled.div`
   height: 100%;
   background: rgba(225,225,225,.4);
   z-index: 1001;
+  pointer-events: auto;
   &.display-block {
     display: block;
   }

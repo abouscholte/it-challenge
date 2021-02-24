@@ -8,10 +8,11 @@ import { GridColHalf } from "components/elements/containers"
 
 function Admin() {
 
+  // set page title
+  useEffect(() => document.title = 'Administrator Paneel - Notenboom')
+  
   // fetch users
   const users = FetchUsers()
-  // set document title
-  useEffect(() => document.title = 'Administrator Paneel - Notenboom')
 
   // get the values for user statistics
   const countUsers = users.length
@@ -20,12 +21,16 @@ function Admin() {
   
   return (
     <>
+      {/* render navbar and default page container */}
       <NavbarLarge />
       <DefaultPage title="Administrator Paneel" grid>
+        {/* left grid column, for books and error rapports */}
         <GridColHalf>
           <SectionTitle>Beheer foutenrapportages</SectionTitle>
           <SectionTitle>Beheer boeken</SectionTitle>
         </GridColHalf>
+
+        {/* right grid column, for user admin and stats */}
         <GridColHalf>
           <SectionTitle>Beheer gebruikers</SectionTitle>
           <section id="useradmin">
