@@ -16,12 +16,14 @@ import {
   FormLinks
 } from "components/elements/forms"
 import Alert from "components/elements/alert"
+import Modal from "components/elements/modal"
 
 function Account() {
 
   // set states and variables
   const history = useHistory()
   const location = useLocation()
+  const [showModal, setShowModal] = useState(false)
   const [alert, setAlert] = useState({ visible: (location.state ? true : false), alert: (location.state ? location.state.alert : null) })
   const [user, setUser] = useState({
     id: null,
@@ -99,6 +101,14 @@ function Account() {
         .catch((error) => console.error(error))
     )
   }
+
+  function modalVisible() {
+    setShowModal(true)
+  }
+
+  function modalInvisible() {
+    setShowModal(false)
+  }
   
   return (
     <>
@@ -142,7 +152,7 @@ function Account() {
               </FormGroup>
               <FormSubmit type="submit" value="Wijzig account" tabIndex="4" className="button" />
               <FormLinks>
-                <Link className="danger" to="#" onClick={() => deleteUser()}>Verwijder account</Link>
+                <Link className="danger" to="#" onClick={() => modalVisible()}>Verwijder account</Link>
               </FormLinks>
             </form>
           )}
@@ -158,6 +168,17 @@ function Account() {
           <h1>Uw aanpassingen</h1>
           <p>U heeft nog geen aanpassingen aan lesboeken gemaakt.</p>
         </GridColOneThird>
+        <Modal 
+          show={showModal}
+          handleClose={modalInvisible}
+          actionButton={true}
+          actionButtonText="Verwijder"
+          actionButtonClassName="danger"
+          actionButtonOnClick={() => deleteUser()}
+        >
+          <h2 style={{ margin: 0, marginBottom: 10 }}>Weet u zeker dat u uw account wilt verwijderen?</h2>
+          <p>U kunt hierna niet meer terug. Al uw gegevens worden verwijderd. Weet u dit zeker?</p>
+        </Modal>
       </DefaultPage>
     </>
   )
