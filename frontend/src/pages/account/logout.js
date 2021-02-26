@@ -2,13 +2,14 @@ import React from "react"
 import { Redirect } from "react-router-dom"
 
 function Logout() {
+  // clear local storage
   localStorage.clear()
-  const alert = "U bent nu succesvol uitgelogd!"
 
+  // return a redirect function and show alert
   return (
     <Redirect to={{
       pathname: '/account/inloggen',
-      state: { alert: alert }  
+      state: { alert: "U bent nu succesvol uitgelogd!" }  
     }} />
   )
 }

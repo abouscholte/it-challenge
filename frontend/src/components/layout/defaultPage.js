@@ -3,8 +3,10 @@ import styled from "styled-components"
 import Footer from "./footer"
 import HeroImage from "images/default-hero.png"
 import { 
-  Container, 
+  Container,
+  ContainerSm,
   MainContainer, 
+  MainContainerSm,
   MainGridContainer 
 } from "../elements/containers"
 
@@ -12,18 +14,30 @@ function DefaultPage(props) {
   return (
     <React.Fragment>
       <PageHeroSection>
-        <Container>
-          <PageHeroTitle>{props.title}</PageHeroTitle>
-        </Container>
+        {props.small ? (
+          <ContainerSm>
+            <PageHeroTitle>{props.title}</PageHeroTitle>
+          </ContainerSm>
+        ) : (
+          <Container>
+            <PageHeroTitle>{props.title}</PageHeroTitle>
+          </Container>
+        )}
       </PageHeroSection>
       {props.grid ? (
         <MainGridContainer>
           {props.children}
         </MainGridContainer>
       ) : (
-        <MainContainer>
-          {props.children}
-        </MainContainer>
+        props.small ? (
+          <MainContainerSm>
+            {props.children}
+          </MainContainerSm>
+        ) : (
+          <MainContainer>
+            {props.children}
+          </MainContainer>
+        )
       )}
       <Footer />
     </React.Fragment>

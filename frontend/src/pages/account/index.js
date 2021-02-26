@@ -17,6 +17,7 @@ function Account() {
     id: null,
     email: null,
     username: null,
+    password: null,
     name: null,
     admin: null
   })
@@ -56,7 +57,6 @@ function Account() {
     _.assign(user, data)
     _.assign(user, { token: localStorage.getItem('jwt-token') })
     const body = JSON.stringify(user)
-    console.log(body)
 
     trackPromise (
       fetch(`${process.env.REACT_APP_API_BASEURL}/user/update.php`, {
@@ -90,6 +90,7 @@ function Account() {
     )
   }
 
+  // functions for opening and closing modals
   function modalVisible() {
     setShowModal(true)
   }
@@ -98,6 +99,7 @@ function Account() {
     setShowModal(false)
   }
   
+  // return account page (in components folder)
   return <AccountIndex
     alert={alert}
     user={user}

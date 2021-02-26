@@ -149,7 +149,7 @@ class User {
   function update() {
     $query = "UPDATE " . $this->table_name . "
               SET
-                email=:email, gebruikersnaam=:gebruikersnaam, naam=:naam, admin=:admin, status=:status
+                email=:email, gebruikersnaam=:gebruikersnaam, naam=:naam, wachtwoord=:wachtwoord, admin=:admin, status=:status
               WHERE id=:id";
 
     // prepare query
@@ -159,11 +159,13 @@ class User {
     $this->email = htmlspecialchars(strip_tags(($this->email)));
     $this->gebruikersnaam = htmlspecialchars(strip_tags(($this->gebruikersnaam)));
     $this->naam = htmlspecialchars(strip_tags($this->naam));
+    $this->wachtwoord = password_hash($this->wachtwoord, PASSWORD_BCRYPT);
 
     // bind values
     $stmt->bindParam(":email", $this->email);
     $stmt->bindParam(":gebruikersnaam", $this->gebruikersnaam);
     $stmt->bindParam(":naam", $this->naam);
+    $stmt->bindParam(":wachtwoord", $this->wachtwoord);
     $stmt->bindParam(":admin", $this->admin);
     $stmt->bindParam(":status", $this->status);
     $stmt->bindParam(":id", $this->id);

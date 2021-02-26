@@ -6,10 +6,12 @@ import DefaultPage from 'components/layout/defaultPage'
 
 function NotPermitted() {
 
+  // return document title
   useEffect(() => document.title = 'Account nog niet goedgekeurd - easyForm')
   
   return (
     <>
+      {/* render navbar and default wrapper with text and button */}
       <NavbarSmall />
       <DefaultPage title="Account nog niet goedgekeurd">
         <p className="large">Uw Notenboom account is nog niet goedgekeurd door onze administrator. Dit kan even duren. U ontvangt een e-mail als dit is gebeurd. U kunt nu weer uitloggen.</p>

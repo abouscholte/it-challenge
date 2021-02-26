@@ -7,7 +7,15 @@ export const Container = styled.section`
   position: relative;
 `
 
+export const ContainerSm = styled(Container)`
+  max-width: 640px;
+`
+
 export const MainContainer = styled(Container)`
+  margin: 50px auto;
+`
+
+export const MainContainerSm = styled(ContainerSm)`
   margin: 50px auto;
 `
 

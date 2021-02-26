@@ -43,6 +43,7 @@ function Signup() {
     )
   }
 
+  // return signup page (in componets folder)
   return (
     <SignupForm 
       alert={alert}

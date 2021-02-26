@@ -50,6 +50,7 @@ function Login() {
     )
   }
 
+  // return login page (in components folder)
   return <LoginForm 
     alert={alert}
     handleSubmit={handleSubmit}
