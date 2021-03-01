@@ -11,8 +11,6 @@ class User {
   public $gebruikersnaam;
   public $naam;
   public $wachtwoord;
-  public $code;
-  public $code_aangemaakt;
   public $admin;
   public $status;
 
@@ -49,8 +47,6 @@ class User {
     $this->gebruikersnaam = $row['gebruikersnaam'];
     $this->naam = $row['naam'];
     $this->wachtwoord = $row['wachtwoord'];
-    $this->code = $row['code'];
-    $this->code_aangemaakt = $row['code_aangemaakt'];
     $this->admin = $row['admin'];
     $this->status = $row['status'];
   }
@@ -111,8 +107,6 @@ class User {
     $this->username = $row['gebruikersnaam'];
     $this->name = $row['naam'];
     $this->password = $row['wachtwoord'];
-    $this->code = $row['code'];
-    $this->code_created = $row['code_aangemaakt'];
     $this->admin = $row['admin'];
     $this->status = $row['status'];
   }

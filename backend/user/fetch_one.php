@@ -43,8 +43,6 @@ if (!empty($data->token) && !empty($data->id)) {
         "username" => $user->gebruikersnaam,
         "name" => $user->naam,
         "password" => $user->wachtwoord,
-        "code" => $user->code,
-        "code_created" => $user->code_aangemaakt,
         "admin" => $user->admin,
         "status" => $user->status
       );

@@ -9,6 +9,7 @@ const Signup = lazy(() => pMinDelay(import('./pages/account/signup'), 200))
 const Fouten = lazy(() => pMinDelay(import('./pages/fouten'), 200))
 const Account = lazy(() => pMinDelay(import('./pages/account'), 200))
 const ChangePassword = lazy(() => pMinDelay(import('./pages/account/changePassword'), 200))
+const ForgottenPassword = lazy(() => pMinDelay(import('./pages/account/forgottenPassword'), 200))
 const NotPermitted = lazy(() => pMinDelay(import('./pages/account/notPermitted')))
 const Logout = lazy(() => pMinDelay(import('./pages/account/logout'), 600))
 const Admin = lazy(() => pMinDelay(import('./pages/admin'), 200))
@@ -32,6 +33,7 @@ function App() {
       {/* account routes */}
       <PrivateRoute exact path="/account/" component={Account} />
       <PrivateRoute exact path="/account/wijzig-wachtwoord" component={ChangePassword} />
+      <Route exact path="/account/wachtwoord-vergeten" component={ForgottenPassword} />
       <Route exact path="/account/uitloggen" component={Logout} />
       <Route exact path="/account/account-niet-goedgekeurd" component={NotPermitted} />
 

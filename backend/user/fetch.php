@@ -46,8 +46,6 @@ if (isset($data->token)) {
         "username" => $gebruikersnaam,
         "name" => $naam,
         "password" => $wachtwoord,
-        "code" => $code,
-        "code_created" => $code_aangemaakt,
         "admin" => $admin,
         "status" => $status
       );
