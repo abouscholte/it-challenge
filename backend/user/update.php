@@ -68,9 +68,13 @@ if (!empty($data->id) && !empty($data->token)) {
         $user->email = $data->email;
         $user->naam = $data->name;
         $user->gebruikersnaam = $data->username;
-        $user->wachtwoord = $data->password;
         $user->admin = $data->admin;
         $user->status = $data->status;
+        if ($data->password == $user->wachtwoord) {
+          $user->wachtwoord = $user->wachtwoord;
+        } else {
+          $user->wachtwoord = password_hash($data->wachtwoord, PASSWORD_BCRYPT);
+        }
 
         if ($user->update()) {
           echo json_encode(array("success" => ($decoded_array['uid'] == $data->id) ? 'Uw account is succesvol bijgewerkt!' : 'Het account is succesvol bijgewerkt!'));

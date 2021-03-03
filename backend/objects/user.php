@@ -153,7 +153,6 @@ class User {
     $this->email = htmlspecialchars(strip_tags(($this->email)));
     $this->gebruikersnaam = htmlspecialchars(strip_tags(($this->gebruikersnaam)));
     $this->naam = htmlspecialchars(strip_tags($this->naam));
-    $this->wachtwoord = password_hash($this->wachtwoord, PASSWORD_BCRYPT);
 
     // bind values
     $stmt->bindParam(":email", $this->email);
