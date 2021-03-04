@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useState, useEffect } from "react"
 import styled from "styled-components"
 import Footer from "./footer"
 import HeroImage from "images/default-hero.png"
@@ -9,34 +9,51 @@ import {
   MainContainerSm,
   MainGridContainer 
 } from "../elements/containers"
+import { TopLoader } from "./pageLoader"
 
 function DefaultPage(props) {
+
+  // set up page loading
+  const [loading, setLoading] = useState(true)
+  useEffect(() => {
+    setTimeout(() => {
+      setLoading(false)
+    }, 200)
+  }, [setLoading])
+  
   return (
     <React.Fragment>
-      <PageHeroSection>
+      {loading && <TopLoader />}
+      <PageHeroSection style={props.full && { marginBottom: 0 }}>
         {props.small ? (
           <ContainerSm>
-            <PageHeroTitle>{props.title}</PageHeroTitle>
+            <PageHeroTitle className={loading && 'loading'}>{props.title}</PageHeroTitle>
           </ContainerSm>
         ) : (
           <Container>
-            <PageHeroTitle>{props.title}</PageHeroTitle>
+            <PageHeroTitle className={loading && 'loading'}>{props.title}</PageHeroTitle>
           </Container>
         )}
       </PageHeroSection>
-      {props.grid ? (
-        <MainGridContainer>
-          {props.children}
-        </MainGridContainer>
+      {loading ? (
+        <Block />
       ) : (
-        props.small ? (
-          <MainContainerSm>
+        props.grid ? (
+          <MainGridContainer>
             {props.children}
-          </MainContainerSm>
+          </MainGridContainer>
         ) : (
-          <MainContainer>
-            {props.children}
-          </MainContainer>
+          props.small ? (
+            <MainContainerSm>
+              {props.children}
+            </MainContainerSm>
+          ) : (
+            props.full ? props.children : (
+              <MainContainer>
+                {props.children}
+              </MainContainer>
+            )
+          )
         )
       )}
       <Footer />
@@ -77,9 +94,19 @@ const PageHeroTitle = styled.h1`
   line-height: 1.3;
   position: relative;
   z-index: 1;
+  transition: opacity .1s ease;
   @media screen and (max-width: 1000px) {
     font-size: 1.8rem;
   }
+  &.loading {
+    opacity: 0;
+  }
+`
+
+const Block = styled.section`
+  width: 100%;
+  height: 100vh;
+  background: ${props => props.theme.background};
 `
 
 export default DefaultPage

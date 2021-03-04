@@ -39,7 +39,7 @@ if (!empty($data->token)) {
       // set book property values
       $book->titel = $data->title;
       $book->uitgever = $data->publisher;
-      $book->$jaar_uitgegeven = $data->year_published;
+      $book->jaar_uitgegeven = $data->year_published;
       $book->isbn = $data->isbn;
       $book->type = $data->type;
 

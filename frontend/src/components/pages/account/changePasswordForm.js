@@ -25,13 +25,7 @@ const ChangePasswordForm = props => (
           </FormGroup>
           <FormSubmit type="submit" value="Wijzig account" className="button" />
           <FormLinks>
-            <Link to={{
-              pathname: '/account/wachtwoord-vergeten',
-              state: { alert: {
-                visible: true,
-                alert: "Voor veiligheidsredenen bent u nu uitgelogd. U kunt weer inloggen als u een nieuw wachtwoord heeft ontvangen."
-              }}
-            }}>Wachtwoord vergeten?</Link>
+            <Link to="/account/wachtwoord-vergeten">Wachtwoord vergeten?</Link>
           </FormLinks>
         </OldPassForm>
       )
@@ -60,7 +54,7 @@ const OldPassForm = styled.form`
   transition: all 200ms cubic-bezier(0,-1.12, 0.93, 0.93);
   &.hidden {
     opacity: 0;
-    transform: translateX(50%);
+    transform: translateX(50%) scale(0.7);
   }
 `
 
@@ -74,7 +68,7 @@ const NewPassForm = styled.form`
   top: 0;
   &.hidden {
     opacity: 0;
-    transform: translateX(-50%);
+    transform: translateX(-50%) scale(0.7);
   }
 `
 

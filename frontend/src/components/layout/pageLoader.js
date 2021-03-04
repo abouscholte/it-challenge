@@ -28,6 +28,12 @@ function PageLoader(props) {
   )
 }
 
+export const TopLoader = () => (
+  <TopLoaderContainer>
+    <LinearProgress id="progress" />
+  </TopLoaderContainer>
+)
+
 const Loader = styled.section`
   position: fixed;
   top: 0;
@@ -56,6 +62,14 @@ const Loader = styled.section`
     font-weight: 200;
     opacity: .7;
   }
+`
+
+const TopLoaderContainer = styled.section`
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1002;
 `
 
 export default PageLoader

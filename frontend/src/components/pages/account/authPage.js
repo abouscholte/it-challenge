@@ -1,6 +1,7 @@
 import React from "react"
 import { Link } from "react-router-dom"
 import styled from "styled-components"
+import { FormInfo } from "components/elements/forms"
 import LogoSimple from "images/logo-simple.png"
 
 class AuthPage extends React.Component {
@@ -71,15 +72,6 @@ const PageSubtitle = styled.p`
   font-size: 16px;
   color: #444;
   margin: 0 0 30px 0;
-`
-
-const FormInfo = styled.p`
-  padding: 20px;
-  box-sizing: border-box;
-  margin: 0 0 30px;
-  background: white;
-  border: 1px solid #eaecef;
-  border-radius: 5px;
 `
 
 const FormPageFooter = styled.footer`

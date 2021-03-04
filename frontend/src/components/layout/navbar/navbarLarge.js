@@ -14,6 +14,7 @@ function NavbarLarge() {
       </MainLink>
       <NavLinks className={navOpen ? 'nav-open' : ''}>
         <NavLink activeClassName="is-active" to="/fouten">Rapporteer fouten</NavLink>
+        <NavLink activeClassName="is-active" to="/boeken">Boeken</NavLink>
         <NavLink activeClassName="is-active" to="/account">Account</NavLink>
         {JSON.parse(localStorage.getItem('currentUser')).adm == 1 && 
           <NavLink activeClassName="is-active" to="/admin">Admin</NavLink>
@@ -72,7 +73,7 @@ const NavLinks = styled.nav`
     }
   }
 
-  @media screen and (max-width: 650px) {
+  @media screen and (max-width: 750px) {
     position: absolute;
     top: 100%;
     left: 0;
@@ -157,7 +158,7 @@ const NavbarToggler = styled.div`
     box-shadow: 0 0 0 3px rgba(lightblue, .7);
   }
 
-  @media screen and (max-width: 650px) {
+  @media screen and (max-width: 750px) {
     display: block;
   }
 `
