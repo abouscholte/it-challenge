@@ -41,11 +41,13 @@ if (isset($data->token)) {
       $book = array(
         "id" => $id,
         "title" => $titel,
+        "author" => $auteur,
         "publisher" => $uitgever,
         "year_published" => $jaar_uitgegeven,
         "isbn" => $isbn,
         "type" => $type,
-        "status" => $status
+        "status" => $status,
+        "user_id" => $gebruiker_id
       );
 
       array_push($books_arr['books'], $book);

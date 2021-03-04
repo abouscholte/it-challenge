@@ -31,17 +31,21 @@ if (!empty($data->token)) {
   if ($decoded) {
     if (
       !empty($data->title) &&
+      !empty($data->author) &&
       !empty($data->publisher) &&
       !empty($data->year_published) &&
       !empty($data->isbn) &&
-      !empty($data->type)
+      !empty($data->type) &&
+      !empty($data->user_id)
     ) {
       // set book property values
       $book->titel = $data->title;
+      $book->auteur = $data->author;
       $book->uitgever = $data->publisher;
       $book->jaar_uitgegeven = $data->year_published;
       $book->isbn = $data->isbn;
       $book->type = $data->type;
+      $book->gebruiker_id = $data->user_id;
 
       // create book
       if ($book->create()) {

@@ -1,32 +1,18 @@
 import React from "react"
-import { usePromiseTracker } from "react-promise-tracker"
 import styled from "styled-components"
+import Navbar from "components/layout/navbar/navbar"
 import LinearProgress from "@material-ui/core/LinearProgress"
-import Logo from "images/logo-simple.png"
+import HeroImage from "images/default-hero.png"
 
-function PageLoader(props) {
-  const { promiseInProgress } = usePromiseTracker()
-  
-  return (
-    (props.promise && promiseInProgress === true) ? (
-      <Loader>
-        <LinearProgress id="progress" />
-        <div>
-          <img src={Logo} alt="notenboom-logo" />
-          <h1>Aan het laden</h1>
-        </div>
-      </Loader>  
-    ) : (
-      <Loader>
-        <LinearProgress id="progress" />
-        <div>
-          <img src={Logo} alt="notenboom-logo" />
-          <h1>Aan het laden</h1>
-        </div>
-      </Loader>
-    )
-  )
-}
+const PageLoader = () => (
+  <React.Fragment>
+    <TopLoaderContainer>
+      <LinearProgress id="progress" />
+    </TopLoaderContainer>
+    <LoaderNavbar />
+    <PageHero />
+  </React.Fragment>
+)
 
 export const TopLoader = () => (
   <TopLoaderContainer>
@@ -34,34 +20,32 @@ export const TopLoader = () => (
   </TopLoaderContainer>
 )
 
-const Loader = styled.section`
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 1002;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  background: white;
-  #progress {
+const PageHero = styled.section`
+  height: 285px;
+  color: white;
+  background-image: url("${HeroImage}"); 
+  background-position: center;
+  background-size: cover;
+  position: relative;
+  overflow: hidden;
+  &::after {
+    content: "";
     position: absolute;
     top: 0;
-    left: 0;
     right: 0;
-  }
-  img {
-    max-height: 100px;
+    bottom: 0;
+    left: 0;
+    background: linear-gradient(266.01deg,#d2aa71 10%,#003162 50%);
     display: block;
-    margin: 0 auto 30px auto;
+    opacity: .5;
   }
-  h1 {
-    color: #003162;
-    font-weight: 200;
-    opacity: .7;
+  @media screen and (max-width: 1000px) {
+    height: 187px;
   }
+`
+
+const LoaderNavbar = styled(Navbar)`
+  height: 75px;
 `
 
 const TopLoaderContainer = styled.section`

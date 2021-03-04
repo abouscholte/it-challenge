@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
-import { trackPromise } from "react-promise-tracker"
 import _ from "lodash"
 
 import Page from "components/layout/defaultPage"
@@ -31,27 +30,26 @@ function NewBook() {
   // handle form submit
   const onSubmit = data => {
     _.assign(data, { token: localStorage.getItem('jwt-token') })
+    _.assign(data, { user_id: JSON.parse(localStorage.getItem('currentUser')).uid })
 
-    trackPromise (
-      fetch(`${process.env.REACT_APP_API_BASEURL}/book/create.php`, {
-        method: 'POST', body: JSON.stringify(data)
+    fetch(`${process.env.REACT_APP_API_BASEURL}/book/create.php`, {
+      method: 'POST', body: JSON.stringify(data)
+    })
+      .then(async response => {
+        const data = await response.json()
+
+        // check if error or success
+        if (data.error) {
+          setAlert({ visible: true, alert: data.error })
+        } else {
+          setAlert({ 
+            visible: true, 
+            alert: 'Het boek is succesvol toegevoegd, het zal nu eerst moeten worden goedgekeurd door een administrator voordat het boek te zien zal zijn voor iedereen. U wordt zo weer teruggestuurd naar de boekenplank.' 
+          })
+          setTimeout(() => history.push('/boeken'), 5000)
+        }
       })
-        .then(async response => {
-          const data = await response.json()
-
-          // check if error or success
-          if (data.error) {
-            setAlert({ visible: true, alert: data.error })
-          } else {
-            setAlert({ 
-              visible: true, 
-              alert: 'Het boek is succesvol toegevoegd, het zal nu eerst moeten worden goedgekeurd door een administrator voordat het boek te zien zal zijn voor iedereen. U wordt zo weer teruggestuurd naar de boekenplank.' 
-            })
-            setTimeout(() => history.push('/boeken'), 5000)
-          }
-        })
-        .catch((error) => console.error(error))
-    )
+      .catch((error) => console.error(error))
   }
   
   return (
@@ -72,6 +70,13 @@ function NewBook() {
               required: 'Dit veld is verplicht!'
             })} />
             {errors.title && <FormControlError>{errors.title.message}</FormControlError>}
+          </FormGroup>
+          <FormGroup>
+            <FormLabel htmlFor="author">Wat is de auteur van het boek?</FormLabel>
+            <FormControl type="text" id="author" name="author" className={errors.author && 'error'} ref={register({
+              required: 'Dit veld is verplicht!'
+            })} />
+            {errors.author && <FormControlError>{errors.author.message}</FormControlError>}
           </FormGroup>
           <FormGroup>
             <FormLabel htmlFor="publisher">Wat is de uitgever van het boek?</FormLabel>
@@ -101,6 +106,7 @@ function NewBook() {
             })}>
               <option value="papier">Papieren boek</option>
               <option value="ebook">E-book</option>
+              <option value="audio">Audioboek</option>
             </FormSelect>
             {errors.type && <FormControlError>{errors.type.message}</FormControlError>}
           </FormGroup>

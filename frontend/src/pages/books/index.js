@@ -31,12 +31,15 @@ function Boeken() {
         <BooksSection>
           {books.map(item => (
             <BookContainer key={item.id}>
-              <BookTitle dangerouslySetInnerHTML={{ __html: item.title }} />
+              <div>
+                <BookTitle dangerouslySetInnerHTML={{ __html: item.title }} />
+                <BookAuthor dangerouslySetInnerHTML={{ __html: item.author }} />
+              </div>
               <BookMeta>
                 <li dangerouslySetInnerHTML={{ __html: `Uitgever: ${item.publisher}` }} />
                 <li>Uitgegeven: {item.year_published}</li>
                 <li>ISBN: {item.isbn}</li>
-                <li>Type: {item.type == 'papier' ? 'Papieren boek' : 'E-book'}</li>
+                <li>Type: {item.type == 'papier' ? 'Papieren boek' : item.type == 'audio' ? 'Audioboek' : 'E-book'}</li>
               </BookMeta>
               <BookAction to={`/fouten/rapporteer/boek-${item.id}`}>Rapporteer fout</BookAction>
             </BookContainer>
@@ -80,6 +83,14 @@ const BookContainer = styled.div`
 const BookTitle = styled.h3`
   margin: 0 0 5px;
   font-size: 1.4rem;
+`
+
+const BookAuthor = styled.h4`
+  margin: 0 0 10px;
+  line-height: 1;
+  font-weight: 400;
+  font-size: 1rem;
+  color: #555;
 `
 
 const BookMeta = styled.ul`

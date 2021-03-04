@@ -34,6 +34,7 @@ if (!empty($data->token)) {
     if (
       !empty($data->id) &&
       !empty($data->title) &&
+      !empty($data->author) &&
       !empty($data->publisher) &&
       !empty($data->year_published) &&
       !empty($data->isbn) &&
@@ -42,6 +43,7 @@ if (!empty($data->token)) {
       // set book property values
       $book->id = $data->id;
       $book->titel = $data->title;
+      $book->auteur = $data->author;
       $book->uitgever = $data->publisher;
       $book->$jaar_uitgegeven = $data->year_published;
       $book->isbn = $data->isbn;
