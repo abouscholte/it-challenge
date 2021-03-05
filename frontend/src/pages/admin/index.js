@@ -1,63 +1,115 @@
-import { useEffect } from "react"
-import { Link } from "react-router-dom"
+import React, { useState, useEffect } from "react"
+import _ from "lodash"
+import Page from "components/layout/sidebarPage"
+import Navbar from "components/layout/navbar/navbarLarge"
 import FetchUsers from "components/users/fetch"
-import styled from "styled-components"
-import NavbarLarge from "components/layout/navbar/navbarLarge"
-import DefaultPage from "components/layout/defaultPage"
-import { GridColHalf } from "components/elements/containers"
+import { useHistory, useLocation } from "react-router-dom"
 
-function Admin() {
+import { TableStyle } from "components/layout/globalStyle"
 
-  // set page title
-  useEffect(() => document.title = 'Administrator Paneel - Notenboom')
+export default function Admin() {
+
+  // set state and constants
+  const [users, setUsers] = useState([])
+  const [filteredUsers, setFilteredUsers] = useState([])
+  const [order, setOrder] = useState('old_to_new')
+  const [filter, setFilter] = useState('all')
+
+  const fetchUsers = FetchUsers()
+  const history = useHistory()
+  const location = useLocation()
   
-  // fetch users
-  const users = FetchUsers()
+  useEffect(() => {
+    // set page title
+    document.title = 'Beheer gebruikers - Administrator - Notenboom'
 
-  // get the values for user statistics
-  const countUsers = users.length
-  const countValidUsers = users.filter((obj) => obj.status == 1).length
-  const countInvalidUsers = countUsers - countValidUsers
+    // set users
+    setUsers(fetchUsers)
+    setFilteredUsers(fetchUsers.filter((user) => user.status == 0))
+  }, [setUsers, setFilteredUsers, fetchUsers]);
+  
+  // function for clicking on table row
+  // redirect to that users control view
+  function selectUser(id) {
+    history.push({
+      pathname: `/admin/gebruikers/gebruiker-${id}`,
+      state: {
+        from: location.pathname
+      }
+    })
+  }
+
+  // function for ordering table
+  function handleOrder() {
+    setOrder((order == 'old_to_new') ? 'new_to_old' : 'old_to_new')
+    _.reverse(users)
+  }
+  
+  // set sidebar links
+  const sidebarLinks = [
+    {title: 'Gebruikers', to: '/admin'},
+    {title: 'Foutenrapportages', to: '/admin/fouten'},
+    {title: 'Boeken', to: '/admin/boeken'}
+  ]
   
   return (
-    <>
-      {/* render navbar and default page container */}
-      <NavbarLarge />
-      <DefaultPage title="Administrator Paneel" grid>
-        {/* left grid column, for books and error rapports */}
-        <GridColHalf>
-          <SectionTitle>Beheer foutenrapportages</SectionTitle>
-          <SectionTitle>Beheer boeken</SectionTitle>
-        </GridColHalf>
+    <React.Fragment>
+      {/* render navbar, page layout and styles for table */}
+      <TableStyle />
+      <Navbar />
+      <Page title="Administrator paneel" sidebarTitle="Beheer alle gebruikers" sidebarLinks={sidebarLinks}>
+        <p className="large">Klik op een kolom om de gebruiker te beheren. U kunt als administrator een gebruikersaccount wijzigen en verwijderen.</p>
 
-        {/* right grid column, for user admin and stats */}
-        <GridColHalf>
-          <SectionTitle>Beheer gebruikers</SectionTitle>
-          <section id="useradmin">
-            <h2>Beheer en bekijk</h2>
-            <ul>
-              <li><Link to="/admin/gebruikers/alle-gebruikers">Beheer en bekijk alle gebruikers</Link></li>
-              <li><Link to="/admin/gebruikers/nieuwe-gebruikers">Beheer en bekijk nieuwe gebruikers</Link></li>
-            </ul>
-          </section>
-          <section id="userstats">
-            <h2>Statistieken</h2>
-            <ul>
-              <li>Aantal gebruikers: <b>{countUsers} {countUsers == 1 ? 'gebruiker' : 'gebruikers'}</b></li>
-              <li>Aantal goedgekeurde gebruikers: <b>{countValidUsers} {countValidUsers == 1 ? 'gebruiker' : 'gebruikers'}</b></li>
-              <li>Aantal niet goedgekeurde gebruikers: <b>{countInvalidUsers} {countInvalidUsers == 1 ? 'gebruiker' : 'gebruikers'}</b></li>
-            </ul>
-          </section>
-        </GridColHalf>
-      </DefaultPage>
-    </>
+        {/* filter buttons */}
+        <div id="filters" style={{ marginBottom: 30, marginTop: 10 }}>
+          <div className="small" style={{ marginBottom: 5}} onClick={() => handleOrder()}>{(order == 'old_to_new') ? 'Sorteer van nieuw naar oud' : 'Sorteer van oud naar nieuw'}</div>
+          <div className="small" onClick={() => setFilter(filter == 'all' ? 'new' : 'all')}>{(filter == 'all') ? 'Laat alleen nieuwe gebruikers zien' : 'Laat alle gebruikers zien'}</div>
+        </div>
+
+        {/* render table */}
+        <div className="table-container">
+          <table className="table">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Gebruikersnaam</th>
+                <th scope="col">E-mailadres</th>
+                <th scope="col">Volledige naam</th>
+                <th scope="col">Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              {filter == 'all' ?
+                users.map((user, i) => (
+                  <tr key={i + 1} onClick={() => selectUser(user.id)} tabIndex={i + 1}>
+                    <th scope="col">{user.id}</th>
+                    <td>{user.username}</td>
+                    <td>{user.email}</td>
+                    <td>{user.name}</td>
+                    <td>{user.status == 1 ? 'Goedgekeurd' : 'Niet goedgekeurd'}</td>
+                  </tr>
+                ))
+              : 
+                filteredUsers.length >= 1 ? (
+                  filteredUsers.map((user, i) => (
+                    <tr key={i + 1} onClick={() => selectUser(user.id)} tabIndex={i + 1}>
+                      <th scope="col">{user.id}</th>
+                      <td>{user.username}</td>
+                      <td>{user.email}</td>
+                      <td>{user.name}</td>
+                      <td>{user.status == 1 ? 'Goedgekeurd' : 'Niet goedgekeurd'}</td>
+                    </tr>
+                  ))
+                ) : (
+                  <tr>
+                    <td /><td /><td /><td /><td />
+                  </tr>
+                )
+              }
+            </tbody>
+          </table>
+        </div>
+      </Page>
+    </React.Fragment>
   )
 }
-
-const SectionTitle = styled.h1`
-  border-bottom: 2px solid #eee;
-  padding-bottom: 10px;
-  margin-bottom: 30px;
-`
-
-export default Admin

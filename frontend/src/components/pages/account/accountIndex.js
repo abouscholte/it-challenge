@@ -12,7 +12,6 @@ const AccountIndex = props => (
     <NavbarLarge />
     <Page title="Uw account" sidebarTitle="Beheer uw account" sidebarLinks={props.sidebarLinks}>
 
-      {/* left grid col with form and alert */}
       <Alert visible={props.alert.visible} text={props.alert.alert} />
       <h1>Uw persoonlijk Notenboom account.</h1>
       <p className="large">Beheer hier uw persoonlijke Notenboom account. U kunt uw informatie (e-mailadres, gebruikersnaam en naam) veranderen en uw wachtwoord aanpassen. Ook kunt u er voor kiezen uw account permanent te verwijderen.</p>

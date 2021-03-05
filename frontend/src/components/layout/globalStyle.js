@@ -24,15 +24,15 @@ const GlobalStyle = createGlobalStyle`
   h1 {
     margin: 0 0 20px;
     font-size: 2rem;
-    .small {
-      font-size: 0.9rem;
-      color: #666666;
-      display: inline-block;
-      margin-left: 15px;
-      font-weight: 200;
-      text-decoration: underline;
-      cursor: pointer;
-    }
+  }
+
+  .small {
+    font-size: 0.9rem;
+    color: #666666;
+    display: block;
+    font-weight: 200;
+    text-decoration: underline;
+    cursor: pointer;
   }
 
   *,
@@ -186,8 +186,6 @@ export const TableStyle = createGlobalStyle`
   }
 
   .table-container {
-    width: 100%;
-    max-width: 100%;
     overflow-x: scroll;
   }
 
@@ -204,12 +202,13 @@ export const TableStyle = createGlobalStyle`
   tbody tr {
     cursor: pointer;
     transition: .2s;
+    outline: none;
     &:hover,
     &:focus {
       background: ${props => props.theme.grey};
     }
     &:focus {
-      border-radius: 0 0 3px ${props => props.theme.outline};
+      box-shadow: inset 0 0 0 2px ${props => props.theme.outline};
     }
   }
 

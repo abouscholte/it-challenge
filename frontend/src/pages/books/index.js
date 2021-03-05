@@ -1,9 +1,15 @@
 import React, { useEffect, useState } from "react"
-import styled from "styled-components"
 import FetchBooks from "components/books/fetch"
 import Page from "components/layout/defaultPage"
 import NavbarLarge from "components/layout/navbar/navbarLarge"
-
+import {
+  CardsSection,
+  Card,
+  CardTitle,
+  CardSubtitle,
+  CardList,
+  CardLink
+} from "components/elements/cards"
 import { Link } from "react-router-dom"
 
 function Boeken() {
@@ -28,85 +34,26 @@ function Boeken() {
           <Link to="/boeken/nieuw-boek">Voeg dan een nieuw boek toe</Link>.
         </p>
 
-        <BooksSection>
+        <CardsSection>
           {books.map(item => (
-            <BookContainer key={item.id}>
+            <Card key={item.id}>
               <div>
-                <BookTitle dangerouslySetInnerHTML={{ __html: item.title }} />
-                <BookAuthor dangerouslySetInnerHTML={{ __html: item.author }} />
+                <CardTitle dangerouslySetInnerHTML={{ __html: item.title }} />
+                <CardSubtitle dangerouslySetInnerHTML={{ __html: item.author }} />
               </div>
-              <BookMeta>
+              <CardList>
                 <li dangerouslySetInnerHTML={{ __html: `Uitgever: ${item.publisher}` }} />
                 <li>Uitgegeven: {item.year_published}</li>
                 <li>ISBN: {item.isbn}</li>
                 <li>Type: {item.type == 'papier' ? 'Papieren boek' : item.type == 'audio' ? 'Audioboek' : 'E-book'}</li>
-              </BookMeta>
-              <BookAction to={`/fouten/rapporteer/boek-${item.id}`}>Rapporteer fout</BookAction>
-            </BookContainer>
+              </CardList>
+              <CardLink to={`/fouten/rapporteer/boek-${item.id}`}>Rapporteer fout</CardLink>
+            </Card>
           ))}
-        </BooksSection>
+        </CardsSection>
       </Page>
     </>
   )
 }
-
-const BooksSection = styled.section`
-  display: flex;
-  justify-content: flex-start;
-  // align-items: flex-start;
-  flex-wrap: wrap;
-  @media screen and (max-width: 750px) {
-    display: block;
-  }
-`
-
-const BookContainer = styled.div`
-  padding: 20px;
-  background: #fff;
-  border: 1px solid #ddd;
-  border-radius: .5rem;
-  width: calc((100% / 3) - (40px / 3));
-  margin: 0 20px 20px 0;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  &:nth-child(3n + 3) {
-    margin: 0 0 20px 0;
-  }
-  
-  @media screen and (max-width: 750px) {
-    width: 100%;
-    margin: 0 0 20px 0;
-  }
-`
-
-const BookTitle = styled.h3`
-  margin: 0 0 5px;
-  font-size: 1.4rem;
-`
-
-const BookAuthor = styled.h4`
-  margin: 0 0 10px;
-  line-height: 1;
-  font-weight: 400;
-  font-size: 1rem;
-  color: #555;
-`
-
-const BookMeta = styled.ul`
-  padding: 0;
-  margin: 0 0 10px 0;
-  list-style: none;
-  font-family: 'Barlow', sans-serif;
-  font-size: 14px;
-  
-  li {
-    margin-bottom: 3px;
-  }
-`
-
-const BookAction = styled(Link)`
-
-`
 
 export default Boeken
