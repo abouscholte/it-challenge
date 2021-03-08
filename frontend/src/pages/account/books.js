@@ -27,17 +27,10 @@ export default function Books() {
     setBooks(filtered_books)
   }, [setBooks, fetchBooks])
   
-  // set sidebar links
-  const sidebarLinks = [
-    {title: 'Uw account', to: '/account'},
-    {title: 'Uw aanpassingen', to: '/account/aanpassingen'},
-    {title: 'Uw boeken', to: '/account/boeken'}
-  ]
-  
   return (
     <React.Fragment>
       <Navbar />
-      <Page title="Uw account" sidebarTitle="Beheer uw boeken" sidebarLinks={sidebarLinks}>
+      <Page title="Uw account" sidebarTitle="Beheer uw boeken" sidebarType="account">
         <h1>Al uw geüploade boeken</h1>
         
         <CardsSection>

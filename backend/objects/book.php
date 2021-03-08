@@ -8,7 +8,7 @@ class Book {
   // object properties
   public $id;
   public $titel;
-  public $author;
+  public $auteur;
   public $uitgever;
   public $jaar_uitgegeven;
   public $isbn;
@@ -32,6 +32,29 @@ class Book {
     return $stmt;
   }
 
+  // read one book
+  function read_single() {
+    $query = "SELECT * 
+              FROM " . $this->table_name . "
+              WHERE id=:id";
+    
+    // prepare and execute query and bind params
+    $stmt = $this->conn->prepare($query);
+    $stmt->bindParam(":id", $this->id);
+    $stmt->execute();
+
+    // fetch user and set values
+    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+    $this->titel = $row['titel'];
+    $this->auteur = $row['auteur'];
+    $this->uitgever = $row['uitgever'];
+    $this->jaar_uitgegeven = $row['jaar_uitgegeven'];
+    $this->isbn = $row['isbn'];
+    $this->type = $row['type'];
+    $this->status = $row['status'];
+    $this->gebruiker_id = $row['gebruiker_id'];
+  }
+  
   // create book
   function create() {
     $query = "INSERT INTO
@@ -41,14 +64,6 @@ class Book {
 
     // prepare query
     $stmt = $this->conn->prepare($query);
-
-    // sanitize
-    $this->titel = htmlspecialchars(strip_tags($this->titel));
-    $this->auteur = htmlspecialchars(strip_tags($this->auteur));
-    $this->uitgever = htmlspecialchars(strip_tags($this->uitgever));
-    $this->jaar_uitgegeven = htmlspecialchars(strip_tags($this->jaar_uitgegeven));
-    $this->isbn = htmlspecialchars(strip_tags($this->isbn));
-    $this->type = htmlspecialchars(strip_tags($this->type));
 
     // bind values
     $stmt->bindParam(":titel", $this->titel);
@@ -67,19 +82,11 @@ class Book {
   function update() {
     $query = "UPDATE " . $this->table_name . "
               SET
-                titel=:titel, auteur=:auteur, uitgever=:uitgever, jaar_uitgegeven=:jaar_uitgegeven, isbn=:isbn, type=:type
+                titel=:titel, auteur=:auteur, uitgever=:uitgever, jaar_uitgegeven=:jaar_uitgegeven, isbn=:isbn, type=:type, status=:status
               WHERE id=:id";
 
     // prepare query
     $stmt = $this->conn->prepare($query);
-
-    // sanitize
-    $this->titel = htmlspecialchars(strip_tags($this->titel));
-    $this->auteur = htmlspecialchars(strip_tags($this->auteur));
-    $this->uitgever = htmlspecialchars(strip_tags($this->uitgever));
-    $this->jaar_uitgegeven = htmlspecialchars(strip_tags($this->jaar_uitgegeven));
-    $this->isbn = htmlspecialchars(strip_tags($this->isbn));
-    $this->type = htmlspecialchars(strip_tags($this->type));
 
     // bind values
     $stmt->bindParam(":titel", $this->titel);
@@ -88,6 +95,21 @@ class Book {
     $stmt->bindParam(":jaar_uitgegeven", $this->jaar_uitgegeven);
     $stmt->bindParam(":isbn", $this->isbn);
     $stmt->bindParam(":type", $this->type);
+    $stmt->bindParam(":status", $this->status);
+    $stmt->bindParam(":id", $this->id);
+
+    // execute query
+    return ($stmt->execute()) ? true : false;
+  }
+
+  // delete book
+  // returns true if deletion was succesfull
+  function delete() {
+    $query = "DELETE FROM " . $this->table_name . "
+              WHERE id=:id";
+
+    // prepare query and bind value
+    $stmt = $this->conn->prepare($query);
     $stmt->bindParam(":id", $this->id);
 
     // execute query

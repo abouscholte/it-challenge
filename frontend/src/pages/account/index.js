@@ -98,13 +98,6 @@ function Account() {
   function modalInvisible() {
     setShowModal(false)
   }
-
-  // sidebar links
-  const sidebarLinks = [
-    {title: 'Uw account', to: '/account'},
-    {title: 'Uw aanpassingen', to: '/account/aanpassingen'},
-    {title: 'Uw boeken', to: '/account/boeken'}
-  ]
   
   // return account page (in components folder)
   return <AccountIndex
@@ -118,7 +111,6 @@ function Account() {
     modalInvisible={modalInvisible}
     showModal={showModal}
     deleteUser={deleteUser}
-    sidebarLinks={sidebarLinks}
   />
 }
 

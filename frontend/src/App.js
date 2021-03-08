@@ -2,8 +2,6 @@ import React, { lazy } from "react"
 import { Switch, Route } from "react-router-dom"
 import { PrivateRoute, GuestRoute, AdminRoute } from "components/users/routes"
 
-const UsersTable = lazy(() => import('./pages/admin/usersTable'))
-
 function App() {
   return (
     <Switch>
@@ -19,6 +17,7 @@ function App() {
 
       <PrivateRoute exact path="/boeken" component={lazy(() => import('./pages/books'))} />
       <PrivateRoute exact path="/boeken/nieuw-boek" component={lazy(() => import('./pages/books/new-book'))} />
+      <AdminRoute exact path="/boeken/boek-:id" component={lazy(() => import('./pages/books/book'))} />
 
       {/* account routes */}
       <PrivateRoute exact path="/account/" component={lazy(() => import('./pages/account'))} />
@@ -32,9 +31,8 @@ function App() {
 
       {/* admin routes */}
       <AdminRoute exact path="/admin" component={lazy(() => import('./pages/admin'))} />
-      <AdminRoute exact path="/admin/gebruikers/alle-gebruikers"><UsersTable /></AdminRoute>
-      <AdminRoute exact path="/admin/gebruikers/nieuwe-gebruikers"><UsersTable new_users /></AdminRoute>
-      <AdminRoute exact path="/admin/gebruikers/gebruiker-:id" component={lazy(() => import('./pages/admin/controlUser'))} />
+      <AdminRoute exact path="/admin/boeken" component={lazy(() => import('./pages/admin/books'))} />
+      <AdminRoute exact path="/admin/gebruiker-:id" component={lazy(() => import('./pages/admin/controlUser'))} />
 
       {/* 404 */}
       <Route component={lazy(() => import('./pages/notFound'))} />

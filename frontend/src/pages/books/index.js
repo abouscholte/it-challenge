@@ -23,7 +23,7 @@ function Boeken() {
     document.title = 'Bekijk boeken - Notenboom'
 
     // fetch books
-    setBooks(fetchBooks)
+    setBooks(fetchBooks.filter((item) => item.status == 1))
   }, [fetchBooks, setBooks])
   
   return (
@@ -32,6 +32,12 @@ function Boeken() {
       <Page title="Notenboom Boekenplank">
         <p className="large">Kunt u niet vinden wat u zoekt?&nbsp;
           <Link to="/boeken/nieuw-boek">Voeg dan een nieuw boek toe</Link>.
+        </p>
+        <p className="large" style={{ margin: '-10px 0 30px 0' }}>
+          Alleen boeken die zijn goedgekeurd door een administrator worden hier weergegeven. 
+          {JSON.parse(localStorage.getItem('currentUser')).adm == 1 && (
+            <span> Als administrator kunt u alle boeken <Link to="/admin/boeken">hier</Link> beheren.</span>
+          )}
         </p>
 
         <CardsSection>
@@ -47,7 +53,16 @@ function Boeken() {
                 <li>ISBN: {item.isbn}</li>
                 <li>Type: {item.type == 'papier' ? 'Papieren boek' : item.type == 'audio' ? 'Audioboek' : 'E-book'}</li>
               </CardList>
-              <CardLink to={`/fouten/rapporteer/boek-${item.id}`}>Rapporteer fout</CardLink>
+
+              <div className="card-links">
+                <CardLink to={`/fouten/rapporteer/boek-${item.id}`}>Rapporteer fout</CardLink>
+                {(JSON.parse(localStorage.getItem('currentUser')).adm == 1) &&
+                  <React.Fragment>
+                    <br />
+                    <CardLink to={`/boeken/book-${item.id}`}>Wijzig boek</CardLink>
+                  </React.Fragment>
+                }
+              </div>
             </Card>
           ))}
         </CardsSection>

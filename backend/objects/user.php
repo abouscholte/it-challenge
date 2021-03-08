@@ -122,10 +122,7 @@ class User {
     // prepare query
     $stmt = $this->conn->prepare($query);
 
-    // sanitize
-    $this->email = htmlspecialchars(strip_tags($this->email));
-    $this->gebruikersnaam = htmlspecialchars(strip_tags($this->gebruikersnaam));
-    $this->naam = htmlspecialchars(strip_tags($this->naam));
+    // set password hash
     $this->wachtwoord = password_hash($this->wachtwoord, PASSWORD_BCRYPT);
 
     // bind values
@@ -148,11 +145,6 @@ class User {
 
     // prepare query
     $stmt = $this->conn->prepare($query);
-
-    // sanitize
-    $this->email = htmlspecialchars(strip_tags(($this->email)));
-    $this->gebruikersnaam = htmlspecialchars(strip_tags(($this->gebruikersnaam)));
-    $this->naam = htmlspecialchars(strip_tags($this->naam));
 
     // bind values
     $stmt->bindParam(":email", $this->email);

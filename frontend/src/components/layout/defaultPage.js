@@ -15,6 +15,7 @@ function DefaultPage(props) {
 
   // set up page loading
   const [loading, setLoading] = useState(true)
+  
   useEffect(() => {
     setTimeout(() => {
       setLoading(false)

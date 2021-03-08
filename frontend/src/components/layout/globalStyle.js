@@ -21,6 +21,12 @@ const GlobalStyle = createGlobalStyle`
     line-height: 1.6;
   }
 
+  p.subtitle {
+    margin: -20px 0 20px 0;
+    font-size: 18px;
+    color: #666;
+  }
+
   h1 {
     margin: 0 0 20px;
     font-size: 2rem;

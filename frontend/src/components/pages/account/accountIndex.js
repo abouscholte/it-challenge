@@ -10,7 +10,7 @@ const AccountIndex = props => (
   <>
     {/* navbar and page wrapper */}
     <NavbarLarge />
-    <Page title="Uw account" sidebarTitle="Beheer uw account" sidebarLinks={props.sidebarLinks}>
+    <Page title="Uw account" sidebarTitle="Beheer uw account" sidebarType="account">
 
       <Alert visible={props.alert.visible} text={props.alert.alert} />
       <h1>Uw persoonlijk Notenboom account.</h1>

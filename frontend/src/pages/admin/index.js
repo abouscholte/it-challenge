@@ -32,7 +32,7 @@ export default function Admin() {
   // redirect to that users control view
   function selectUser(id) {
     history.push({
-      pathname: `/admin/gebruikers/gebruiker-${id}`,
+      pathname: `/admin/gebruiker-${id}`,
       state: {
         from: location.pathname
       }

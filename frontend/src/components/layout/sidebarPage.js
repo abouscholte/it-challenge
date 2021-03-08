@@ -4,11 +4,24 @@ import Page from "components/layout/defaultPage"
 import { NavLink } from "react-router-dom"
 import { ChevronDownOutline } from "react-ionicons"
 
-const SidebarPage = ({ children, title, sidebarTitle, sidebarLinks }) => {
+const SidebarPage = ({ children, title, sidebarTitle, sidebarType }) => {
 
+  // set sidebar links
+  const accountLinks = [
+    {title: 'Uw account', to: '/account'},
+    {title: 'Uw aanpassingen', to: '/account/aanpassingen'},
+    {title: 'Uw boeken', to: '/account/boeken'}
+  ]
+  
+  const adminLinks = [
+    {title: 'Gebruikers', to: '/admin'},
+    {title: 'Foutenrapportages', to: '/admin/fouten'},
+    {title: 'Boeken', to: '/admin/boeken'}
+  ]
+  
   // set state variables
   const [navOpen, setNavOpen] = useState(false)
-
+  const [links] = useState(sidebarType == 'account' ? accountLinks : adminLinks)
   
   return (
     <React.Fragment>
@@ -24,7 +37,7 @@ const SidebarPage = ({ children, title, sidebarTitle, sidebarLinks }) => {
                 </span>
               </NavTitle>
               <List className={navOpen ? 'nav-open' : ''}>
-                {sidebarLinks.map((item, key) => (
+                {links.map((item, key) => (
                   <li key={key}>
                     <SidebarLink exact to={item.to}>{item.title}</SidebarLink>
                   </li>
@@ -70,11 +83,14 @@ const Sidebar = styled.nav`
 
   @media screen and (max-width: 750px) {
     max-width: 100%;
-    position: static;
+    position: sticky;
+    z-index: 500;
+    top: 0;
     padding: 30px 20px 5px 20px;
     margin: 0;
     border-right: none;
     border-bottom: 1px solid #ddd;
+    background: white;
   }
 `
 
@@ -178,6 +194,7 @@ const Right = styled.section`
   @media screen and (max-width: 750px) {
     max-width: 100%;
     padding: 0 20px;
+    margin: 20px auto 50px auto;
   }
 `
 
