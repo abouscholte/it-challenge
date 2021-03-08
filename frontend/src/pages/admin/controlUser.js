@@ -56,7 +56,7 @@ function ControlUser() {
   function updateStatus() {
     setAlert({ visible: false, alert: null  })
     
-    _.assign(user, { status: (user.status == 0) ? 1 : 0, token: localStorage.getItem('jwt-token') });
+    _.assign(user, { status: (user.status == 0) ? 1 : 0, token: localStorage.getItem('jwt-token'), change_status: 'true' });
     const body = JSON.stringify(user)
 
     trackPromise (
