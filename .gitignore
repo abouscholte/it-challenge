@@ -130,7 +130,7 @@ typings/
 dist
 
 # build directory
-build
+**/build
 
 # Gatsby files
 .cache/
