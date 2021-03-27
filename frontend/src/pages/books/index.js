@@ -55,11 +55,11 @@ function Boeken() {
               </CardList>
 
               <div className="card-links">
-                <CardLink to={`/fouten/rapporteer/boek-${item.id}`}>Rapporteer fout</CardLink>
+                <CardLink to={`/fouten/boek-${item.id}`}>Rapporteer fout</CardLink>
                 {(JSON.parse(localStorage.getItem('currentUser')).adm == 1) &&
                   <React.Fragment>
                     <br />
-                    <CardLink to={`/boeken/book-${item.id}`}>Wijzig boek</CardLink>
+                    <CardLink to={`/boeken/boek-${item.id}`}>Wijzig boek</CardLink>
                   </React.Fragment>
                 }
               </div>

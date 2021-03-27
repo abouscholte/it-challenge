@@ -94,6 +94,7 @@ const GlobalStyle = createGlobalStyle`
     transition: box-shadow .2s;
     margin: 0;
     font-size: 16px;
+    font-family: 'Roboto Slab', sans-serif;
     &:hover,
     &:focus {
       background: ${props => props.theme.lighter_blue};

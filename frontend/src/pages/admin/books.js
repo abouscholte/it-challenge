@@ -32,6 +32,21 @@ export default function Books() {
   const BookCard = item => {
     
     const book = item.item
+    const [user, setUser] = useState({})
+
+    const fetchUser = user_id => {
+      const body = { token: localStorage.getItem('jwt-token'), id: user_id }
+      fetch(`${process.env.REACT_APP_API_BASEURL}/user/fetch_one.php`, {
+        method: 'POST', body: JSON.stringify(body)
+      })
+        .then(async response => {
+          const data = await response.json()
+          setUser(data)
+        })
+        .catch((error) => console.error(error))
+    }
+
+    useEffect(() => {fetchUser(book.user_id)}, [book.user_id])
 
     return (
       <Card key={book.id} two>
@@ -40,6 +55,7 @@ export default function Books() {
           <CardSubtitle>{book.author}</CardSubtitle>
         </div>
         <CardList>
+          <li>Toegevoegd door: {user.name}</li>
           <li>Uitgever: {book.publisher}</li>
           <li>Uitgegeven: {book.year_published}</li>
           <li>ISBN: {book.isbn}</li>

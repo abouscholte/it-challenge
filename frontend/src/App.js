@@ -14,6 +14,7 @@ function App() {
 
       {/* fouten & boeken routes */}
       <PrivateRoute exact path="/fouten" component={lazy(() => import('./pages/fouten'))} />
+      <PrivateRoute exact path="/fouten/boek-:id" component={lazy(() => import('./pages/fouten/book-id'))} />
 
       <PrivateRoute exact path="/boeken" component={lazy(() => import('./pages/books'))} />
       <PrivateRoute exact path="/boeken/nieuw-boek" component={lazy(() => import('./pages/books/new-book'))} />

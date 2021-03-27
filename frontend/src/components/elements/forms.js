@@ -52,6 +52,33 @@ export const FormControl = styled.input`
   }
 `
 
+export const FormTextArea = styled.textarea`
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: 10px;
+  border: 2px solid ${props => props.theme.grey};
+  border-radius: 8px;
+  -webkit-appearance: none;
+  background: white;
+  box-sizing: border-box;
+  transition: .2s;
+  outline: none;
+  font-size: 16px;
+  font-family: 'Roboto Slab', sans-serif;
+  resize: vertical;
+  &:hover,
+  &:focus {
+    border-color: ${props => props.theme.darker_grey};
+  }
+  &:focus {
+    box-shadow: 0 0 0 3px ${props => props.theme.outline};
+  }
+  &.error {
+    border-color: ${props => props.theme.ferrari_red};
+  }
+`
+
 export const FormSelect = styled.select`
   display: block;
   width: 100%;

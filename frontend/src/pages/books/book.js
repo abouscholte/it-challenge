@@ -22,20 +22,25 @@ import { ArrowBackOutline } from "react-ionicons"
 export default function Book() {
 
   // set constants and state
-  const book = FetchBook()
+  const fetchBook = FetchBook()
   const history = useHistory()
   const [alert, setAlert] = useState({ visible: false, alert: null })
+  const [book, setBook] = useState({})
   const { register, handleSubmit, errors } = useForm()
   
-  // set page title
-  useEffect(() => document.title = 'Wijzig boek - Notenboom')
+  useEffect(() => {
+    // set page title
+    document.title = 'Wijzig boek - Notenboom'
+
+    // set book and user
+    setBook(fetchBook)
+  }, [fetchBook, setBook])
 
   // change book status
   const onBookStatus = () => {
     setAlert({ visible: false, alert: null })
     const newStatus = (book.status == 0) ? 1 : 'zero'
     _.assign(book, { token: localStorage.getItem('jwt-token'), status: newStatus })
-    console.log(book)
 
     // update book
     fetch(`${process.env.REACT_APP_API_BASEURL}/book/update.php`, {
