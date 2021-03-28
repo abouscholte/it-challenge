@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react"
+import styled from "styled-components"
 import FetchBooks from "components/books/fetch"
 import Page from "components/layout/defaultPage"
 import NavbarLarge from "components/layout/navbar/navbarLarge"
@@ -12,6 +13,7 @@ import {
 } from "components/elements/cards"
 import { SearchBar } from "components/elements/forms"
 import { Link } from "react-router-dom"
+import { Book } from "react-ionicons"
 
 function Boeken() {
   
@@ -61,33 +63,60 @@ function Boeken() {
 
         {/* cards section (for books) */}
         <CardsSection>
-          {books.map(item => (
-            <Card key={item.id} data-book-id={item.id}>
-              <div>
-                <CardTitle>{item.title}</CardTitle>
-                <CardSubtitle>{item.author}&nbsp;&#8211;&nbsp;{item.type == 'papier' ? 'Papieren boek' : item.type == 'audio' ? 'Audioboek' : 'E-book'}</CardSubtitle>
-              </div>
-              <CardList>
-                <li>{`Uitgever: ${item.publisher}`}</li>
-                <li>Uitgegeven: {item.year_published}</li>
-                <li>ISBN: {item.isbn}</li>
-              </CardList>
-
-              <div className="card-links">
-                <CardLink to={`/fouten/rapporteer-${item.id}`}>Rapporteer fout</CardLink>
-                {(JSON.parse(localStorage.getItem('currentUser')).adm == 1) &&
-                  <React.Fragment>
-                    <br />
-                    <CardLink to={`/fouten/boeken/boek-${item.id}`}>Wijzig boek</CardLink>
-                  </React.Fragment>
-                }
-              </div>
-            </Card>
-          ))}
+          {books.length > 0
+            ? (
+              books.map(item => (
+                <Card key={item.id} data-book-id={item.id}>
+                  <div>
+                    <CardTitle>{item.title}</CardTitle>
+                    <CardSubtitle>{item.author}&nbsp;&#8211;&nbsp;{item.type == 'papier' ? 'Papieren boek' : item.type == 'audio' ? 'Audioboek' : 'E-book'}</CardSubtitle>
+                  </div>
+                  <CardList>
+                    <li>{`Uitgever: ${item.publisher}`}</li>
+                    <li>Uitgegeven: {item.year_published}</li>
+                    <li>ISBN: {item.isbn}</li>
+                  </CardList>
+    
+                  <div className="card-links">
+                    <CardLink to={`/fouten/rapporteer-${item.id}`}>Rapporteer fout</CardLink>
+                    {(JSON.parse(localStorage.getItem('currentUser')).adm == 1) &&
+                      <React.Fragment>
+                        <br />
+                        <CardLink to={`/fouten/boeken/boek-${item.id}`}>Wijzig boek</CardLink>
+                      </React.Fragment>
+                    }
+                  </div>
+                </Card>
+              ))
+            )
+            : (
+              <EmptySection>
+                <Book />
+                <p className="large">Er zijn geen boeken gevonden.</p>
+              </EmptySection>
+            )
+          }
         </CardsSection>
       </Page>
     </>
   )
 }
+
+const EmptySection = styled.section`
+  margin: 50px auto;
+  text-align: center;
+  svg {
+    width: 70px;
+    height: 70px;
+    margin-bottom: 15px;
+    fill: ${props => props.theme.primary_blue};
+  }
+  p.large {
+    font-size: 20px;
+    max-width: 250px;
+    margin: 0 auto;
+    color: ${props => props.theme.primary_blue};
+  }
+`
 
 export default Boeken

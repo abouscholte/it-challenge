@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react"
+import styled from "styled-components"
 import FetchBooks from "components/books/fetch"
 import Page from "components/layout/sidebarPage"
 import Navbar from "components/layout/navbar/navbarLarge"
@@ -11,6 +12,7 @@ import {
   CardLink
 } from "components/elements/cards"
 import { SearchBar } from "components/elements/forms"
+import { Book } from "react-ionicons"
 
 export default function Books() {
 
@@ -98,13 +100,36 @@ export default function Books() {
         
         {/* cards section */}
         <CardsSection>
-          {
+          {books.length > 0 ? (
             filter == 'all'  
               ? books.map((item) => <BookCard key={item.id} item={item} />)
               : filteredBooks.map((item) => <BookCard key={item.id} item={item} />)
+            ) : (
+              <EmptySection>
+                <Book />
+                <p className="large">Er zijn geen boeken gevonden.</p>
+              </EmptySection>
+            )
           }
         </CardsSection>
       </Page>
     </React.Fragment>
   )
 }
+
+const EmptySection = styled.section`
+  margin: 50px auto;
+  text-align: center;
+  svg {
+    width: 70px;
+    height: 70px;
+    margin-bottom: 15px;
+    fill: ${props => props.theme.primary_blue};
+  }
+  p.large {
+    font-size: 20px;
+    max-width: 250px;
+    margin: 0 auto;
+    color: ${props => props.theme.primary_blue};
+  }
+`
