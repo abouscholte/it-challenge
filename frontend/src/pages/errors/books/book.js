@@ -48,6 +48,7 @@ export default function Book() {
     })
       .then(async response => {
         const data = await response.json()
+        window.scrollTo({ top: 0, left: 0, behavior: 'smooth' })
 
         if (data.success) {
           setAlert({ visible: true, alert: data.success })
@@ -64,15 +65,17 @@ export default function Book() {
     _.assign(book, { token: localStorage.getItem('jwt-token') })
     _.assign(book, data)
 
+    console.log(book)
+
     // update book
     fetch(`${process.env.REACT_APP_API_BASEURL}/book/update.php`, {
       method: 'POST', body: JSON.stringify(book)
     })
       .then(async response => {
         const data = await response.json()
+        window.scrollTo({ top: 0, left: 0, behavior: 'smooth' })
 
         if (data.success) {
-          window.scrollTo({ top: 0, left: 0, behavior: 'smooth' })
           setAlert({ visible: true, alert: data.success })
         } else {
           setAlert({ visible: true, alert: data.error })
@@ -95,9 +98,9 @@ export default function Book() {
     })
       .then(async response => {
         const data = await response.json()
+        window.scrollTo({ top: 0, left: 0, behavior: 'smooth' })
 
         if (data.success) {
-          window.scrollTo({ top: 0, left: 0, behavior: 'smooth' })
           setAlert({ visible: true, alert: data.success })
 
           setTimeout(() => {

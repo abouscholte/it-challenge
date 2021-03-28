@@ -46,7 +46,7 @@ export default function Books() {
                 <li>ISBN: {item.isbn}</li>
                 <li>Type: {item.type == 'papier' ? 'Papieren boek' : item.type == 'audio' ? 'Audioboek' : 'E-book'}</li>
               </CardList>
-              <CardLink to={`/fouten/boek-${item.id}`}>Rapporteer fout</CardLink>
+              <CardLink to={`/fouten/rapporteer-${item.id}`}>Rapporteer fout</CardLink>
             </Card>
           ))}
         </CardsSection>

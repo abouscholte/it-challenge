@@ -22,15 +22,15 @@ use \Firebase\JWT\JWT;
 $data = json_decode(file_get_contents("php://input"));
 
 // check if jwt token were given
-if (!empty($data->token) && !empty($data->user_id)) {
+if (!empty($data->token)) {
   // get secret key and decode jwt token
   $key = $config->jwt_secret;
   $decoded = JWT::decode($data->token, $key, array('HS256'));
 
   $decoded_array = (array) $decoded;
 
-  // check if user is admin or if user is the correct user
-  if ($decoded_array['adm'] == 1) {
+  // check if user is admin
+  if ($decoded_array["adm"] == 1) {
     if (
       !empty($data->id) &&
       !empty($data->title) &&
@@ -38,8 +38,7 @@ if (!empty($data->token) && !empty($data->user_id)) {
       !empty($data->publisher) &&
       !empty($data->year_published) &&
       !empty($data->isbn) &&
-      !empty($data->type) &&
-      !empty($data->status)
+      !empty($data->type)
     ) {
       // set book property values
       $book->id = $data->id;
@@ -59,20 +58,11 @@ if (!empty($data->token) && !empty($data->user_id)) {
       } else {
         // set http response code - 503 SERVICE UNAVAILABLE
         http_response_code(503);
-        echo json_encode(array("error" => "Er is iets foutgegaan bij het aanmaken van het boek, probeer het opnieuw!"));
+        echo json_encode(array("error" => "Er is iets foutgegaan bij het aanpassen van het boek, probeer het opnieuw!"));
       }
     } else {
       http_response_code(503);
-      
-      if ($decoded_array['adm'] == 1) {
-        echo json_encode(array(
-          "error" => "Dit is gewoon goed wtf!"
-        ));
-      } else {
-        echo json_encode(array(
-          "error" => "Er is iets anders verkeerd gegaan!"
-        ));
-      }
+      echo json_encode(arraY("error" => "Vul alle velden in!"));
     }
   }
 }

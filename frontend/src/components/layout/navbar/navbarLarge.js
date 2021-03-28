@@ -13,8 +13,7 @@ function NavbarLarge() {
         <img src={Logo} alt="notenboom-logo" />
       </MainLink>
       <NavLinks className={navOpen ? 'nav-open' : ''}>
-        <NavLink activeClassName="is-active" to="/fouten">Rapporteer fouten</NavLink>
-        <NavLink activeClassName="is-active" to="/boeken">Boeken</NavLink>
+        <NavLink activeClassName="is-active" to="/fouten">Rapporteer fout</NavLink>
         <NavLink activeClassName="is-active" to="/account">Account</NavLink>
         {JSON.parse(localStorage.getItem('currentUser')).adm == 1 && 
           <NavLink activeClassName="is-active" to="/admin">Admin</NavLink>

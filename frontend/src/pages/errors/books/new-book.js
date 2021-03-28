@@ -42,11 +42,12 @@ function NewBook() {
         if (data.error) {
           setAlert({ visible: true, alert: data.error })
         } else {
-          setAlert({ 
+          window.scrollTo({ top: 0, left: 0, behavior: 'smooth' })
+          setAlert({
             visible: true, 
             alert: 'Het boek is succesvol toegevoegd, het zal nu eerst moeten worden goedgekeurd door een administrator voordat het boek te zien zal zijn voor iedereen. U wordt zo weer teruggestuurd naar de boekenplank.' 
           })
-          setTimeout(() => history.push('/boeken'), 5000)
+          setTimeout(() => history.push('/fouten'), 5000)
         }
       })
       .catch((error) => console.error(error))
@@ -56,7 +57,7 @@ function NewBook() {
     <>
       <NavbarLarge />
       <Page title="Voeg een nieuw boek toe" small>
-        <Link to='/boeken' className="button button-back" style={{ marginBottom: 20 }}>
+        <Link to='/fouten' className="button button-back" style={{ marginBottom: 20 }}>
           <ArrowBackOutline color={'#ffffff'} height="16px" />
           &nbsp;Ga terug
         </Link>

@@ -10,12 +10,14 @@ import {
   CardList,
   CardLink
 } from "components/elements/cards"
+import { SearchBar } from "components/elements/forms"
 
 export default function Books() {
 
   // set constants and such
   const fetchBooks = FetchBooks()
   const [books, setBooks] = useState([])
+  const [booksDefault, setBooksDefaullt] = useState([])
   const [filteredBooks, setFilteredBooks] = useState([])
   const [filter, setFilter] = useState('all')
   
@@ -24,9 +26,17 @@ export default function Books() {
     document.title = 'Bekijk boeken - Notenboom'
 
     // fetch books
-    setBooks(fetchBooks)
+    setBooks(fetchBooks.sort((a, b) => (a.author > b.author) ? 1 : -1))
+    setBooksDefaullt(fetchBooks.filter((item) => item.status == 1))
     setFilteredBooks(fetchBooks.filter((item) => item.status == 0))
   }, [fetchBooks, setBooks, setFilteredBooks])
+
+  const updateInput = (input) => {
+    const filtered = booksDefault.filter(book => {
+      return book.title.toLowerCase().includes(input.target.value.toString().toLowerCase())
+    })
+    setBooks(filtered.sort((a, b) => (a.author > b.author) ? 1 : -1));
+  }
 
   // create book card
   const BookCard = item => {
@@ -61,7 +71,7 @@ export default function Books() {
           <li>ISBN: {book.isbn}</li>
           <li>Type: {book.type == 'papier' ? 'Papieren boek' : book.type == 'audio' ? 'Audioboek' : 'E-book'}</li>
         </CardList>
-        <CardLink to={`/boeken/boek-${book.id}`}>Wijzig boek</CardLink>
+        <CardLink to={`/fouten/boeken/boek-${book.id}`}>Wijzig boek</CardLink>
       </Card>
     )
   }
@@ -79,6 +89,12 @@ export default function Books() {
         <div className="small" style={{ marginBottom: 30 }} onClick={() => setFilter(filter == 'all' ? 'new' : 'all')}>
           {(filter == 'all') ? 'Laat alleen nieuwe boeken zien' : 'Laat alle boeken zien'}
         </div>
+
+        {/* search bar */}
+        <SearchBar
+          placeholder={'Zoek naar titels van boeken'}
+          onChange={updateInput}
+        />
         
         {/* cards section */}
         <CardsSection>

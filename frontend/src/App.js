@@ -13,12 +13,11 @@ function App() {
       <GuestRoute exact path="/account/aanmelden" component={lazy(() => import('./pages/account/signup'))} />
 
       {/* fouten & boeken routes */}
-      <PrivateRoute exact path="/fouten" component={lazy(() => import('./pages/fouten'))} />
-      <PrivateRoute exact path="/fouten/boek-:id" component={lazy(() => import('./pages/fouten/book-id'))} />
-
-      <PrivateRoute exact path="/boeken" component={lazy(() => import('./pages/books'))} />
-      <PrivateRoute exact path="/boeken/nieuw-boek" component={lazy(() => import('./pages/books/new-book'))} />
-      <AdminRoute exact path="/boeken/boek-:id" component={lazy(() => import('./pages/books/book'))} />
+      <PrivateRoute exact path="/fouten" component={lazy(() => import('./pages/errors'))} />
+      <PrivateRoute exact path="/fouten/rapporteer-:id" component={lazy(() => import('./pages/errors/rapport-id'))} />
+      <PrivateRoute exact path="/fouten/boeken/nieuw-boek" component={lazy(() => import('./pages/errors/books/new-book'))} />
+      
+      <AdminRoute exact path="/fouten/boeken/boek-:id" component={lazy(() => import('./pages/errors/books/book'))} />
 
       {/* account routes */}
       <PrivateRoute exact path="/account/" component={lazy(() => import('./pages/account'))} />

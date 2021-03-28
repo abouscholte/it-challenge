@@ -1,4 +1,5 @@
 import styled from "styled-components"
+import { Search } from "react-ionicons"
 
 export const FormPageForm = styled.form`
   display: block;
@@ -160,4 +161,54 @@ export const FormInfo = styled.p`
   background: white;
   border: 1px solid #eaecef;
   border-radius: 5px;
+`
+
+export const SearchBar = props => (
+  <SearchLabel htmlFor={props.id}>
+    <SearchIcon>
+      <Search />
+    </SearchIcon>
+    <FormControl {...props}/>
+  </SearchLabel>
+)
+
+const SearchLabel = styled.label`
+  display: block;
+  height: 43px;
+  margin-bottom: 20px;
+
+  input {
+    margin: 0 0 0 43px;
+    max-width: calc(100% - 43px);
+    border-radius: 0 8px 8px 0;
+    border: 1px solid #ddd;
+    border-left-color: transparent;
+    &::placeholder {
+      transition: color .2s ease-in-out;
+    }
+    &:hover,
+    &:focus {
+      border-left-color: transparent;
+      &::placeholder {
+        color: #333;
+      }
+    }
+  }
+`
+
+const SearchIcon = styled.div`
+  position: absolute;
+  width: 43px;
+  height: 43px;
+  background: ${props => props.theme.primary_blue};
+  border-radius: 8px 0 0 8px;
+  svg {
+    position: absolute;
+    fill: #ddd;
+    width: 18px;
+    height: 18px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
 `

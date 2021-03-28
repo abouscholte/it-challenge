@@ -23,7 +23,8 @@ export default function Rapport() {
 
     // fetch book
     setBook(fetchBook)
-  }, [setBook, fetchBook])
+    console.log(book)
+  }, [setBook, fetchBook, book])
 
   // handle form submit
   const onSubmit = data => {
@@ -85,7 +86,7 @@ export default function Rapport() {
                 </FormGroup>
               )}
               <FormGroup>
-                <FormLabel for="explanation">Voeg een toelichting van de fout toe (dit kan dingen als de locatie van de fout of de inhoud van de fout bevatten)</FormLabel>
+                <FormLabel htmlFor="explanation">Voeg een toelichting van de fout toe (dit kan dingen als de locatie van de fout of de inhoud van de fout bevatten)</FormLabel>
                 <FormTextArea rows="5" id="explanation" name="explanation" className={errors.explanation && 'error'} ref={register({
                   required: 'Dit veld is verplicht!'
                 })} />
