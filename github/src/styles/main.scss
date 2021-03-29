@@ -1,0 +1,34 @@
+// import variables
+@import './variables.scss';
+
+// import fonts
+@import url('https://fonts.googleapis.com/css2?family=Karla:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+
+// body styles
+body {
+  background: $background;
+  color: $text;
+  margin: 0;
+  padding: 0 20px;
+  font: {
+    family: $font;
+    size: 14px;
+  }
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+// text
+h1 {
+  font-size: 2rem;
+  color: $accent;
+  margin: 0 0 30px;
+}
+
+p {
+  margin: 0 0 30px;
+}
