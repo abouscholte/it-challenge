@@ -16,7 +16,7 @@ export default function Top() {
         Alle code van de website voor de IT Challenge voor Notenboom Business School is te vinden op GitHub.
       </p>
 
-      <a className={styles.button} href="https://github.com/abouscholte/it-challenge" target="_blank">
+      <a className={styles.button} href="https://github.com/abouscholte/it-challenge" target="_blank" rel="noreferrer">
         Ga naar GitHub
       </a>
     </div>
