@@ -19,10 +19,10 @@ export default function App() {
   }, []);
   
   return (
-    <div>
+    <>
       <Header />
       <About />
       <Footer />
-    </div>
+    </>
   );
 }
