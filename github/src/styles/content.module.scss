@@ -1,62 +1,73 @@
-// import variables
-@import './variables.scss';
+// import themes
+@import './color-themes.scss';
 
 // styles
 section.content {
   max-width: 650px;
   margin: 50px auto;
-  background: #fff;
   padding: 40px;
   box-shadow: 2px 4px 6px 0 rgba(0,0,0,.1);
-}
-
-h1.title {
-  display: flex;
-  align-items: flex-end;
-}
-
-span.logo {
-  margin: 0 0 -2px 10px;
-}
-
-p.infoline {
-  font-size: 18px;
-  line-height: 1.6;
-}
-
-a.button {
-  display: inline-block;
-  background: $accent;
-  padding: 12px 30px;
-  color: #fff;
-  box-shadow: 1px 2px 4px rgba(0,0,0,.1);
-  border: 2px solid $accent;
-  margin: 0 10px 0 0;
-  &:last-child {
-    margin: 0;
+  @include themed() {
+    background: t($bg-card);
   }
-  &:hover,
-  &:focus {
-    background: lighten($accent, 10%);
+
+  h1.title {
+    display: flex;
+    align-items: flex-end;
   }
-  &.button_outline {
-    background: transparent;
-    color: $accent;
-    box-shadow: 0 0 0 transparent;
+  
+  span.logo {
+    margin: 0 0 -2px 10px;
+  }
+  
+  p.infoline {
+    font-size: 18px;
+    line-height: 1.6;
+  }
+  
+  a.button {
+    display: inline-block;
+    padding: 12px 30px;
+    box-shadow: 1px 2px 4px rgba(0,0,0,.1);
+    margin: 0 10px 0 0;
+    @include themed() {
+      background: t($accent);
+      color: t($bg-card);
+      border: 2px solid t($accent);
+    }
+    &:last-child {
+      margin: 0;
+    }
     &:hover,
     &:focus {
-      border-color: lighten($accent, 10%);
-      color: lighten($accent, 10%);
+      @include themed() {
+        background: t($accent-hover);
+      }
+    }
+    &.button_outline {
+      background: transparent;
+      box-shadow: 0 0 0 transparent;
+      @include themed() {
+        color: t($accent);
+      }
+      &:hover,
+      &:focus {
+        background: transparent;
+        @include themed() {
+          border-color: t($accent-hover);
+          color: t($accent-hover);
+        }
+      }
+    }
+    &:focus {
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(lightblue, .9);
     }
   }
-  &:focus {
-    outline: none;
-    box-shadow: 0 0 0 3px rgba(lightblue, .9);
+  
+  .no_margin {
+    margin: 0;
   }
-}
-
-.no_margin {
-  margin: 0;
 }
 
 @media screen and (max-width: 600px) {
@@ -64,18 +75,18 @@ a.button {
     margin: 20px auto;
     padding: 20px;
     text-align: center;
-  }
 
-  h1.title {
-    justify-content: center;
-  }
+    h1.title {
+      justify-content: center;
+    }
+    
+    a.button {
+      display: block;
+      margin: 0 0 10px;
+    }
   
-  a.button {
-    display: block;
-    margin: 0 0 10px;
-  }
-
-  p.infoline {
-    font-size: 16px;
+    p.infoline {
+      font-size: 16px;
+    }
   }
 }

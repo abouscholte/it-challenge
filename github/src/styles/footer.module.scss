@@ -1,5 +1,5 @@
 // import variables
-@import './variables.scss';
+@import './color-themes.scss';
 
 // styles
 footer.footer {
@@ -7,12 +7,14 @@ footer.footer {
   max-width: 650px;
   margin: 0 auto;
   padding: 0 40px 40px 40px;
-}
 
-p.text {
-  margin: 0;
-  font-size: 15px;
-  color: $title;
+  p.text {
+    margin: 0;
+    font-size: 15px;
+    @include themed() {
+      color: t($title);
+    }
+  }
 }
 
 @media screen and (max-width: 600px) {
