@@ -1,0 +1,23 @@
+// import variables
+@import './variables.scss';
+
+// styles
+footer.footer {
+  text-align: left;
+  max-width: 650px;
+  margin: 0 auto;
+  padding: 0 40px 40px 40px;
+}
+
+p.text {
+  margin: 0;
+  font-size: 15px;
+  color: $title;
+}
+
+@media screen and (max-width: 600px) {
+  footer.footer {
+    text-align: center;
+    padding: 10px 40px 40px 40px;
+  }
+}

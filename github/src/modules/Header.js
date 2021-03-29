@@ -4,7 +4,7 @@ import { LogoGithub } from 'react-ionicons';
 
 export default function Top() {
   return (
-    <div className={styles.content}>
+    <section id="header" className={styles.content}>
       <h1 className={styles.title}>
         Bekijk de code
         <span className={styles.logo}>
@@ -17,8 +17,9 @@ export default function Top() {
       </p>
 
       <a className={styles.button} href="https://github.com/abouscholte/it-challenge" target="_blank" rel="noreferrer">
-        Ga naar GitHub
+        Breng me naar GitHub
       </a>
-    </div>
+      <a className={`${styles.button} ${styles.button_outline}`} href="#about">Wat is GitHub?</a>
+    </section>
   );
 }

@@ -1,8 +1,14 @@
 import React from 'react';
-import Top from './modules/Top';
+import Header from './modules/Header';
+import About from './modules/About';
+import Footer from './modules/Footer';
 
 export default function App() {
   return (
-    <Top />
+    <>
+      <Header />
+      <About />
+      <Footer />
+    </>
   );
 }
