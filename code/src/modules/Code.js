@@ -44,7 +44,7 @@ export default function Code() {
         <li className="code_item inline_item">package.json</li>
         
         <li className="code_item main_item">
-          github/
+          code/
           <InlineIcon>
             <LogoReact />
           </InlineIcon>
