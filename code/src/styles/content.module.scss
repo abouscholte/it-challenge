@@ -1,0 +1,92 @@
+// import themes
+@import './color-themes.scss';
+
+// styles
+section.content {
+  max-width: 650px;
+  margin: 40px auto;
+  padding: 40px;
+  box-shadow: 2px 4px 6px 0 rgba(0,0,0,.1);
+  @include themed() {
+    background: t($bg-card);
+  }
+
+  h1.title {
+    display: flex;
+    align-items: flex-end;
+  }
+  
+  span.logo {
+    margin: 0 0 -2px 10px;
+  }
+  
+  p.infoline {
+    font-size: 18px;
+    line-height: 1.6;
+  }
+  
+  a.button {
+    display: inline-block;
+    padding: 12px 30px;
+    box-shadow: 1px 2px 4px rgba(0,0,0,.1);
+    margin: 0 10px 0 0;
+    @include themed() {
+      background: t($accent);
+      color: t($bg-card);
+      border: 2px solid t($accent);
+    }
+    &:last-child {
+      margin: 0;
+    }
+    &:hover,
+    &:focus {
+      @include themed() {
+        background: t($accent-hover);
+      }
+    }
+    &.button_outline {
+      background: transparent;
+      box-shadow: 0 0 0 transparent;
+      @include themed() {
+        color: t($accent);
+      }
+      &:hover,
+      &:focus {
+        background: transparent;
+        @include themed() {
+          border-color: t($accent-hover);
+          color: t($accent-hover);
+        }
+      }
+    }
+    &:focus {
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(lightblue, .9);
+    }
+  }
+  
+  .no_margin {
+    margin: 0;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  section.content {
+    margin: 20px auto;
+    padding: 20px;
+    text-align: center;
+
+    h1.title {
+      justify-content: center;
+    }
+    
+    a.button {
+      display: block;
+      margin: 0 0 10px;
+    }
+  
+    p.infoline {
+      font-size: 16px;
+    }
+  }
+}
