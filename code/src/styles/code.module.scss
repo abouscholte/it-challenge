@@ -37,6 +37,9 @@ li.code_item {
     font-weight: 400;
     padding-left: 25%;
     margin-bottom: 8px;
+    @include themed() {
+      color: rgba(t($title), 0.7);
+    }
     &:first-child {
       margin-top: 8px;
     }

@@ -58,6 +58,8 @@ function Account() {
     _.assign(user, { token: localStorage.getItem('jwt-token') })
     const body = JSON.stringify(user)
 
+    window.scrollTo({ top: 0, left: 0, behavior: 'smooth' })
+    
     trackPromise (
       fetch(`${process.env.REACT_APP_API_BASEURL}/user/update.php`, {
         method: 'POST', body: body
@@ -75,6 +77,8 @@ function Account() {
     _.assign(user, { token: localStorage.getItem('jwt-token') })
     const body = JSON.stringify(user)
 
+    window.scrollTo({ top: 0, left: 0, behavior: 'smooth' })
+    
     trackPromise (
       fetch(`${process.env.REACT_APP_API_BASEURL}/user/delete.php`, { method: 'POST', body: body })
         .then(async response => {

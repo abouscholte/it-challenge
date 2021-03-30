@@ -1,8 +1,17 @@
 import React from 'react';
-import styled from 'styled-components';
-import { LogoReact, LogoJavascript, CodeSharp } from 'react-ionicons';
+import styled, { css } from 'styled-components';
+import { LogoReact, LogoJavascript, CodeSharp, CodeWorkingSharp, FolderSharp } from 'react-ionicons';
 
 export default function Code() {
+  const FolderInlineItem = ({ children }) => (
+    <li className="code_item inline_item">
+      {children}
+      <InlineIcon small>
+        <FolderSharp />
+      </InlineIcon>
+    </li>
+  );
+  
   return (
     <section id="code" className="content">
       <h1 className="title">Over de code</h1>
@@ -15,12 +24,12 @@ export default function Code() {
             <CodeSharp />
           </InlineIcon>
         </li>
-        <li className="code_item inline_item">book/</li>
-        <li className="code_item inline_item">config/</li>
-        <li className="code_item inline_item">email/</li>
-        <li className="code_item inline_item">objects/</li>
-        <li className="code_item inline_item">user/</li>
-        <li className="code_item inline_item">vendor/</li>
+        <FolderInlineItem>book/</FolderInlineItem>
+        <FolderInlineItem>config/</FolderInlineItem>
+        <FolderInlineItem>email/</FolderInlineItem>
+        <FolderInlineItem>objects/</FolderInlineItem>
+        <FolderInlineItem>user/</FolderInlineItem>
+        <FolderInlineItem>vendor/</FolderInlineItem>
         
         <li className="code_item main_item">
           frontend/
@@ -28,20 +37,25 @@ export default function Code() {
             <LogoReact />
           </InlineIcon>
         </li>
-        <li className="code_item inline_item">src/</li>
+        <FolderInlineItem>src/</FolderInlineItem>
         <li className="code_item double_inline_item">
           app.js
-          <InlineIcon>
+          <InlineIcon small>
             <LogoJavascript />
           </InlineIcon>
         </li>
         <li className="code_item double_inline_item">
           index.js
-          <InlineIcon>
+          <InlineIcon small>
             <LogoJavascript />
           </InlineIcon>
         </li>
-        <li className="code_item inline_item">package.json</li>
+        <li className="code_item inline_item">
+          package.json
+          <InlineIcon small>
+            <CodeWorkingSharp />
+          </InlineIcon>
+        </li>
         
         <li className="code_item main_item">
           code/
@@ -49,8 +63,13 @@ export default function Code() {
             <LogoReact />
           </InlineIcon>
         </li>
-        <li className="code_item inline_item">src/</li>
-        <li className="code_item inline_item">package.json</li>
+        <FolderInlineItem>src/</FolderInlineItem>
+        <li className="code_item inline_item">
+          package.json
+          <InlineIcon small>
+            <CodeWorkingSharp />
+          </InlineIcon>
+        </li>
       </ul>
     </section>
   );
@@ -63,5 +82,15 @@ const InlineIcon = styled.span`
     height: 22px;
     margin-bottom: -6px;
     fill: #bbb;
+    color: #bbb;
   }
+  ${props => props.small && css`
+    svg {
+      width: 20px;
+      height: 20px;
+      margin-bottom: -5px;
+      fill: rgba(187, 187, 187, 0.7);
+      color: rgba(187, 187, 187, 0.7);
+    }
+  `}
 `;
