@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react"
 import _ from "lodash"
 import { useLocation, useHistory } from "react-router-dom"
 import { useForm } from "react-hook-form"
-import { trackPromise } from "react-promise-tracker"
 
 import AccountIndex from "components/pages/account/accountIndex"
 
@@ -35,16 +34,14 @@ function Account() {
     
     // fetch user data
     async function fetchData() {
-      trackPromise (
-        fetch(`${process.env.REACT_APP_API_BASEURL}/user/fetch_one.php`, {
-          method: 'POST', body: fetchUserBody
+      fetch(`${process.env.REACT_APP_API_BASEURL}/user/fetch_one.php`, {
+        method: 'POST', body: fetchUserBody
+      })
+        .then(async response => {
+          const data = await response.json()
+          setUser(data)
         })
-          .then(async response => {
-            const data = await response.json()
-            setUser(data)
-          })
-          .catch((error) => console.error(error))
-      )
+        .catch((error) => console.error(error))
     }
 
     fetchData()
@@ -60,17 +57,15 @@ function Account() {
 
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' })
     
-    trackPromise (
-      fetch(`${process.env.REACT_APP_API_BASEURL}/user/update.php`, {
-        method: 'POST', body: body
+    fetch(`${process.env.REACT_APP_API_BASEURL}/user/update.php`, {
+      method: 'POST', body: body
+    })
+      .then(async response => {
+        const fetchData = await response.json()
+        // set error or success message
+        setAlert({ visible: true, alert: fetchData.error ? fetchData.error : fetchData.success })
       })
-        .then(async response => {
-          const fetchData = await response.json()
-          // set error or success message
-          setAlert({ visible: true, alert: fetchData.error ? fetchData.error : fetchData.success })
-        })
-        .catch((error) => console.error(error))
-    )
+      .catch((error) => console.error(error))
   }
 
   function deleteUser() {
@@ -79,19 +74,17 @@ function Account() {
 
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' })
     
-    trackPromise (
-      fetch(`${process.env.REACT_APP_API_BASEURL}/user/delete.php`, { method: 'POST', body: body })
-        .then(async response => {
-          const data = await response.json()
-          setAlert({ visible: true, alert: data.error ? data.error : data.success })
-          setTimeout(() => {
-            history.push({
-              pathname: '/account/uitloggen'
-            })
-          }, 3000)
-        })
-        .catch((error) => console.error(error))
-    )
+    fetch(`${process.env.REACT_APP_API_BASEURL}/user/delete.php`, { method: 'POST', body: body })
+      .then(async response => {
+        const data = await response.json()
+        setAlert({ visible: true, alert: data.error ? data.error : data.success })
+        setTimeout(() => {
+          history.push({
+            pathname: '/account/uitloggen'
+          })
+        }, 3000)
+      })
+      .catch((error) => console.error(error))
   }
 
   // functions for opening and closing modals

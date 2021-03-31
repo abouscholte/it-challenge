@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react"
+import _ from "lodash"
 import styled from "styled-components"
 import Navbar from "components/layout/navbar/navbarLarge"
 import Page from "components/layout/defaultPage"
 import FetchBook from "components/books/fetchOne"
 import Alert from "components/elements/alert"
-import { Link } from "react-router-dom"
+import { Link, useHistory } from "react-router-dom"
 import { ArrowBackOutline as BackIcon } from "react-ionicons"
 import { useForm } from "react-hook-form"
 import { FormPageForm, FormGroup, FormLabel, FormControl, FormSelect, FormTextArea, FormSubmit, FormControlError } from "components/elements/forms"
@@ -16,6 +17,7 @@ export default function Rapport() {
   const [book, setBook] = useState({})
   const [alert, setAlert] = useState({ visible: false, alert: null })
   const {register, handleSubmit, errors} = useForm()
+  const history = useHistory()
 
   useEffect(() => {
     // set page title
@@ -23,15 +25,34 @@ export default function Rapport() {
 
     // fetch book
     setBook(fetchBook)
-    console.log(book)
   }, [setBook, fetchBook, book])
 
   // handle form submit
   const onSubmit = data => {
     setAlert({ visible: false, alert: null })
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' })
-    setAlert({ visible: true, alert: 'U heeft het formulier ingevuld. Veel plezier met je leven vanaf nu!' })
-    console.log(data)
+    
+    _.assign(data, { token: localStorage.getItem('jwt-token') })
+    _.assign(data, { user_id: JSON.parse(localStorage.getItem('currentUser')).uid, book_id: book.id })
+    const body = JSON.stringify(data)
+
+    fetch(`${process.env.REACT_APP_API_BASEURL}/errors/create.php`, {
+      method: 'POST', body: body
+    })
+      .then(async response => {
+        const data = await response.json()
+        if (data.error) {
+          // set error alert
+          setAlert({ visible: true, alert: data.error })
+        } else {
+          // set success alert and redirect after 7 seconds
+          setAlert({ visible: true, alert: data.success })
+          setTimeout(() => {
+            history.push('/fouten')
+          }, 7000)
+        }
+      })
+      .catch((error) => console.error(error))
   }
   
   return (

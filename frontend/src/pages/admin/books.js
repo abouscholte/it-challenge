@@ -25,7 +25,7 @@ export default function Books() {
   
   useEffect(() => {
     // set document title
-    document.title = 'Bekijk boeken - Notenboom'
+    document.title = 'Beheer boeken - Notenboom'
 
     // fetch books
     setBooks(fetchBooks.sort((a, b) => (a.author > b.author) ? 1 : -1))

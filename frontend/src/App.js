@@ -32,6 +32,7 @@ function App() {
       {/* admin routes */}
       <AdminRoute exact path="/admin" component={lazy(() => import('./pages/admin'))} />
       <AdminRoute exact path="/admin/boeken" component={lazy(() => import('./pages/admin/books'))} />
+      <AdminRoute exact path="/admin/fouten" component={lazy(() => import('./pages/admin/errors'))} />
       <AdminRoute exact path="/admin/gebruiker-:id" component={lazy(() => import('./pages/admin/controlUser'))} />
 
       {/* 404 */}

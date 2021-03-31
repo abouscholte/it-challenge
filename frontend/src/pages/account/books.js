@@ -31,7 +31,7 @@ export default function Books() {
     <React.Fragment>
       <Navbar />
       <Page title="Uw account" sidebarTitle="Beheer uw boeken" sidebarType="account">
-        <h1>Al uw geüploade boeken</h1>
+        <h1>Uw geüploade boeken</h1>
         
         <CardsSection>
           {books.map(item => (

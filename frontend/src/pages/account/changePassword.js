@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react"
 import _ from "lodash"
 import { useHistory } from "react-router-dom"
-import { trackPromise } from "react-promise-tracker"
 import { useForm } from "react-hook-form"
 
 import ChangePasswordPage from "components/pages/account/changePassword"
@@ -35,16 +34,14 @@ const ChangePassword = () => {
     
     // fetch user data
     async function fetchData() {
-      trackPromise (
-        fetch(`${process.env.REACT_APP_API_BASEURL}/user/fetch_one.php`, {
-          method: 'POST', body: fetchUserBody
+      fetch(`${process.env.REACT_APP_API_BASEURL}/user/fetch_one.php`, {
+        method: 'POST', body: fetchUserBody
+      })
+        .then(async response => {
+          const data = await response.json()
+          setUser(data)
         })
-          .then(async response => {
-            const data = await response.json()
-            setUser(data)
-          })
-          .catch((error) => console.error(error))
-      )
+        .catch((error) => console.error(error))
     }
 
     fetchData()
@@ -91,27 +88,25 @@ const ChangePassword = () => {
     const body = JSON.stringify(user)
 
     // do update
-    trackPromise (
-      fetch(`${process.env.REACT_APP_API_BASEURL}/user/update.php`, {
-        method: 'POST', body: body
+    fetch(`${process.env.REACT_APP_API_BASEURL}/user/update.php`, {
+      method: 'POST', body: body
+    })
+      .then(async response => {
+        const data = await response.json()
+        
+        if (data.error) setAlert({ visible: true, alert: data.error })
+        else if (data.success) {
+          // set alert when password is correct
+          setAlert({
+            visible: true,
+            alert: "Uw wachtwoord is nu aangepast, u wordt zo teruggestuurd naar uw account."
+          })
+          setTimeout(() => {
+            history.push('/account')
+          }, 3000)
+        }
       })
-        .then(async response => {
-          const data = await response.json()
-          
-          if (data.error) setAlert({ visible: true, alert: data.error })
-          else if (data.success) {
-            // set alert when password is correct
-            setAlert({
-              visible: true,
-              alert: "Uw wachtwoord is nu aangepast, u wordt zo teruggestuurd naar uw account."
-            })
-            setTimeout(() => {
-              history.push('/account')
-            }, 3000)
-          }
-        })
-        .catch((error) => console.error(error))
-    )
+      .catch((error) => console.error(error))
   }
 
   return <ChangePasswordPage

@@ -45,7 +45,7 @@ export const CardTitle = styled.h3`
 
 export const CardSubtitle = styled.h4`
   margin: 0 0 10px;
-  line-height: 1;
+  line-height: 1.5;
   font-weight: 400;
   font-size: 1rem;
   color: #555;
