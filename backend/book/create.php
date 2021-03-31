@@ -21,13 +21,13 @@ use \Firebase\JWT\JWT;
 // get the posted data and make sure the data is not empty
 $data = json_decode(file_get_contents("php://input"));
 
-// check if jwt token were given
+// check if jwt token was given
 if (!empty($data->token)) {
   // get secret key and decode jwt token
   $key = $config->jwt_secret;
   $decoded = JWT::decode($data->token, $key, array('HS256'));
 
-  // check if jwt key was decoded
+  // check if jwt token was decoded
   if ($decoded) {
     if (
       !empty($data->title) &&

@@ -43,7 +43,7 @@ class Book {
     $stmt->bindParam(":id", $this->id);
     $stmt->execute();
 
-    // fetch user and set values
+    // fetch book and set values
     $row = $stmt->fetch(PDO::FETCH_ASSOC);
     $this->titel = $row['titel'];
     $this->auteur = $row['auteur'];
@@ -78,7 +78,7 @@ class Book {
     return ($stmt->execute()) ? true : false;
   }
 
-  // create book
+  // update book
   function update() {
     $query = "UPDATE " . $this->table_name . "
               SET
