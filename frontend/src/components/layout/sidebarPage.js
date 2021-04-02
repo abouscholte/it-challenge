@@ -8,15 +8,15 @@ const SidebarPage = ({ children, title, sidebarTitle, sidebarType }) => {
 
   // set sidebar links
   const accountLinks = [
-    {title: 'Uw account', to: '/account'},
-    {title: 'Uw aanpassingen', to: '/account/aanpassingen'},
-    {title: 'Uw boeken', to: '/account/boeken'}
+    {title: 'Uw account', to: '/account', exact: true},
+    {title: 'Uw aanpassingen', to: '/account/aanpassingen', exact: true},
+    {title: 'Uw boeken', to: '/account/boeken', exact: true}
   ]
   
   const adminLinks = [
-    {title: 'Gebruikers', to: '/admin'},
-    {title: 'Foutenrapportages', to: '/admin/fouten'},
-    {title: 'Boeken', to: '/admin/boeken'}
+    {title: 'Gebruikers', to: '/admin', exact: true},
+    {title: 'Foutenrapportages', to: '/admin/fouten', exact: false},
+    {title: 'Boeken', to: '/admin/boeken', exact: true}
   ]
   
   // set state variables
@@ -39,7 +39,7 @@ const SidebarPage = ({ children, title, sidebarTitle, sidebarType }) => {
               <List className={navOpen ? 'nav-open' : ''}>
                 {links.map((item, key) => (
                   <li key={key}>
-                    <SidebarLink exact to={item.to}>{item.title}</SidebarLink>
+                    <SidebarLink exact={item.exact} to={item.to}>{item.title}</SidebarLink>
                   </li>
                 ))}
               </List>

@@ -52,7 +52,8 @@ if (!empty($data->token)) {
           "user_id" => $row['gebruiker_id'],
           "book_id" => $row['boek_id'],
           "book_title" => $row['titel'],
-          "book_author" => $row['auteur']
+          "book_author" => $row['auteur'],
+          "book_publisher" => $row['uitgever']
         );
 
         array_push($errors_arr['errors'], $error);

@@ -27,7 +27,8 @@ class ErrorRapport {
     $query = "SELECT
                 f.id, f.type, f.hoofdstuk, f.paragraaf,
                 f.alinea, f.pagina, f.toelichting,
-                f.boek_id, f.gebruiker_id, f.status, b.id, b.titel, b.auteur
+                f.boek_id, f.gebruiker_id, f.status, b.id,
+                b.titel, b.auteur, b.uitgever
               FROM " . $this->table_name . " f
               INNER JOIN boeken b
                 ON f.boek_id = b.id";
@@ -37,36 +38,6 @@ class ErrorRapport {
     $stmt->execute();
     
     return $stmt;
-  }
-
-  // read one error
-  function read_single() {
-    $query = "SELECT
-                f.id, f.type, f.hoofdstuk, f.paragraaf,
-                f.alinea, f.pagina, f.toelichting,
-                f.boek_id, f.status, b.id, b.titel, b.auteur
-              FROM " . $this->table_name . " f
-              INNER JOIN boeken b
-                ON f.boek_id = b.id
-              WHERE
-                f.id=:id";
-
-    // prepare and execute query and bind param
-    $stmt = $this->conn->prepare($query);
-    $stmt->bindParam(":id", $this->id);
-    $stmt->execute();
-
-    // fetch error and set values
-    $row = $stmt->fetch(PDO::FETCH_ASSOC);
-    $this->type = $row['type'];
-    $this->hoofdstuk = $row['hoofdstuk'];
-    $this->paragraaf = $row['paragraaf'];
-    $this->alinea = $row['alinea'];
-    $this->pagina = $row['pagina'];
-    $this->toelichting = $row['toelichting'];
-    $this->status = $row['status'];
-    $this->boek_id = $row['boek_id'];
-    $this->gebruiker_id = $row['gebruiker_id'];
   }
 
   // create error
@@ -104,9 +75,7 @@ class ErrorRapport {
     $query = "UPDATE
                 " . $this->table_name . "
               SET
-                (type=:type, hoofdstuk=:hoofdstuk, paragraaf=:paragraaf,
-                 alinea=:alinea, pagina=:pagina, toelichting=:toelichting,
-                 status=:status, boek_id=:boek_id, gebruiker_id)
+                status=:status
               WHERE
                 id=:id";
 
@@ -114,15 +83,7 @@ class ErrorRapport {
     $stmt = $this->conn->prepare($query);
 
     // bind values
-    $stmt->bindParam(":type", $this->type);
-    $stmt->bindParam(":hoofdstuk", $this->hoofdstuk);
-    $stmt->bindParam(":paragraaf", $this->paragraaf);
-    $stmt->bindParam(":alinea", $this->alinea);
-    $stmt->bindParam(":pagina", $this->pagina);
-    $stmt->bindParam(":toelichting", $this->toelichting);
     $stmt->bindParam(":status", $this->status);
-    $stmt->bindParam(":boek_id", $this->boek_id);
-    $stmt->bindParam(":gebruiker_id", $this->gebruiker_id);
     $stmt->bindParam(":id", $this->id);
 
     // execute query

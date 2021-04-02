@@ -1,62 +1,28 @@
 import React, { useState, useEffect } from "react"
+import styled from "styled-components"
 import FetchErrors from "components/errors/fetch"
 import Page from "components/layout/sidebarPage"
 import Navbar from "components/layout/navbar/navbarLarge"
-import {
-  CardsSection,
-  Card,
-  CardTitle,
-  CardSubtitle,
-  CardList,
-  CardLink
-} from "components/elements/cards"
+import ErrorCard from "components/errors/errorCard"
+import { CardsSection } from "components/elements/cards"
 import { Link } from "react-router-dom"
+import { Book } from "react-ionicons"
 
 export default function Errors() {
   // set constants and such
   const fetchErrors = FetchErrors()
   const [errors, setErrors] = useState([])
+  const [defaultErrors, setDefaultErrors] = useState([])
+  const [filter, setFilter] = useState(false)
   
   useEffect(() => {
     // set document title
     document.title = 'Beheer foutenrapportages - Notenboom'
 
     // fetch errors
-    setErrors(fetchErrors)
-  }, [setErrors, fetchErrors, errors])
-
-  // create error card
-  const ErrorCard = item => {
-    const error = item.item
-
-    return (
-      <Card key={error.id} two>
-        <div>
-          <CardTitle>Fout in {error.book_title}</CardTitle>
-          <CardSubtitle>Fout gerapporteerd door <Link to={`/admin/gebruiker-${error.user_id}`}>gebruiker {error.user_id}</Link></CardSubtitle>
-        </div>
-        <CardList>
-          <li>Auteur van boek: {error.book_author}</li>
-          <li>
-            Type fout: {
-              error.type == 'layout'
-                ? 'fout in layout'
-                : error.type == 'info'
-                  ? 'fout in informatie'
-                  : 'taalfout'
-            }
-          </li>
-          <li>Hoofdstuk van fout: {error.chapter}</li>
-          {error.page && <li>Paginanummer van fout: {error.page}</li>}
-          {error.section && <li>Paragraaf van fout: {error.section}</li>}
-          {error.paragraph && <li>Alinea van fout: {error.paragraph}</li>}
-          <li><b>Status: {error.status == 1 ? 'Goedgekeurd' : 'Nog niet goedgekeurd'}</b></li>
-        </CardList>
-        <CardLink to="#">Keur fout goed</CardLink>
-        <CardLink to="#" className="danger">Verwijder fout</CardLink>
-      </Card>
-    )
-  }
+    setErrors(fetchErrors.filter((item) => item.status == 0))
+    setDefaultErrors(fetchErrors)
+  }, [setErrors, fetchErrors, setDefaultErrors])
 
   return (
     <React.Fragment>
@@ -66,13 +32,48 @@ export default function Errors() {
         <h1>Beheer alle foutenrapportages</h1>
         <p className="large">U ziet hieronder alle nieuwe, nog niet goedgekeurde foutenrapportages. Om alle goedgekeurde te zien, gebruik de filters hieronder.</p>
 
+        {/* filter button group */}
+        <div className="button-group filter-button-group">
+          <a className={`button ${filter ? 'active' : 'inactive'}`} href="#" onClick={(e) => {
+            e.preventDefault()
+            setFilter(filter ? false : true)
+            setErrors(filter
+              ? defaultErrors.filter((item) => item.status == 0)
+              : defaultErrors.filter((item) => item.status == 1)
+            )
+          }}>Bekijk goedgekeurde fouten</a>
+          <Link to="/admin/fouten/uitgever" className="button">Bekijk fouten per uitgever</Link>
+        </div>
+
         {/* cards section */}
         <CardsSection>
           {errors.length > 0 ? (
             errors.map((item) => <ErrorCard key={item.id} item={item} />)
-          ) : <p className="large">Er zijn geen foutenregistraties gevonden!</p>}
+          ) : (
+            <EmptySection>
+              <Book />
+              <p className="large">Er zijn geen foutenregistraties gevonden.</p>
+            </EmptySection>
+          )}
         </CardsSection>
       </Page>
     </React.Fragment>
   )
 }
+
+const EmptySection = styled.section`
+  margin: 50px auto;
+  text-align: center;
+  svg {
+    width: 70px;
+    height: 70px;
+    margin-bottom: 15px;
+    fill: ${props => props.theme.primary_blue};
+  }
+  p.large {
+    font-size: 20px;
+    max-width: 250px;
+    margin: 0 auto;
+    color: ${props => props.theme.primary_blue};
+  }
+`

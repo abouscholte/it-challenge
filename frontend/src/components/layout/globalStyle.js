@@ -165,6 +165,24 @@ const GlobalStyle = createGlobalStyle`
         }
       }
     }
+    &.filter-button-group {
+      margin-bottom: 20px;
+      a.button {
+        padding: 8px 20px;
+        margin-bottom: 5px;
+        background: transparent;
+        color: ${props => props.theme.primary_blue};
+        border-width: 1px;
+        transition: background .2s ease-in-out, color .2s ease-in-out, box-shadow .2s ease-in-out;
+        &.active {
+          background: ${props => props.theme.primary_blue};
+          color: white;
+        }
+        &::last-child {
+          margin-bottom: 0;
+        }
+      }
+    }
   }
 `
 
