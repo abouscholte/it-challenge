@@ -1,5 +1,4 @@
 import React from "react"
-import { Link } from "react-router-dom"
 import AuthPage from "components/pages/account/authPage"
 import {
   FormPageForm,
@@ -7,7 +6,6 @@ import {
   FormLabel,
   FormControl,
   FormControlError,
-  FormLinks,
   FormSubmit
 } from "components/elements/forms"
 import Alert from "components/elements/alert"
@@ -33,9 +31,6 @@ const LoginForm = ({ alert, onSubmit, handleSubmit, register, errors }) => (
         {errors.password && <FormControlError>{errors.password.message}</FormControlError>}
       </FormGroup>
       <FormSubmit type="submit" value="Log in" className="button" tabIndex="3" />
-      <FormLinks>
-        <Link to="/account/wachtwoord-vergeten">Wachtwoord vergeten?</Link>
-      </FormLinks>
     </FormPageForm>
   </AuthPage>
 )

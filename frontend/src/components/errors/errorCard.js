@@ -6,10 +6,11 @@ import {
   CardList,
   CardLink
 } from "components/elements/cards"
-import { Link } from "react-router-dom"
+import { Link, useHistory } from "react-router-dom"
 
-const ErrorCard = item => {
+const ErrorCard = ( item ) => {
   const error = item.item
+  const history = useHistory()
 
   return (
     <Card two>
@@ -33,11 +34,14 @@ const ErrorCard = item => {
         {error.page && <li>Paginanummer van fout: {error.page}</li>}
         {error.section && <li>Paragraaf van fout: {error.section}</li>}
         {error.paragraph && <li>Alinea van fout: {error.paragraph}</li>}
-        <p>Toelichting: {error.explanation}</p>
+        <li>Toelichting: {error.explanation}</li>
         <li><b>Status: {error.status == 1 ? 'Goedgekeurd' : 'Nog niet goedgekeurd'}</b></li>
       </CardList>
-      {error.status == 0 && <CardLink to="#" style={{ marginBottom: 5 }}>Keur fout goed</CardLink>}
-      <CardLink to="#" className="danger">Verwijder fout</CardLink>
+
+      <div className="links" style={{ display: 'flex', flexDirection: 'column' }}>
+        {error.status == 0 && <CardLink to="#" style={{ marginBottom: 5 }} onClick={() => history.push(`/admin/fouten/update/${error.status}-${error.id}`)}>Keur fout goed</CardLink>}
+        <CardLink to="#" onClick={() => history.push(`/admin/fouten/delete/${error.id}`)} className="danger">Verwijder fout</CardLink>
+      </div>
     </Card>
   )
 }

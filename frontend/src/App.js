@@ -21,11 +21,9 @@ function App() {
 
       {/* account routes */}
       <PrivateRoute exact path="/account/" component={lazy(() => import('./pages/account'))} />
-      <PrivateRoute exact path="/account/aanpassingen" component={lazy(() => import('./pages/account/changes'))} />
       <PrivateRoute exact path="/account/boeken" component={lazy(() => import('./pages/account/books'))} />
       
       <PrivateRoute exact path="/account/wijzig-wachtwoord" component={lazy(() => import('./pages/account/changePassword'))} />
-      <Route exact path="/account/wachtwoord-vergeten" component={lazy(() => import('./pages/account/forgottenPassword'))} />
       <Route exact path="/account/uitloggen" component={lazy(() => import('./pages/account/logout'))} />
       <Route exact path="/account/account-niet-goedgekeurd" component={lazy(() => import('./pages/account/notPermitted'))} />
 
@@ -34,6 +32,8 @@ function App() {
       <AdminRoute exact path="/admin/boeken" component={lazy(() => import('./pages/admin/books'))} />
       <AdminRoute exact path="/admin/fouten" component={lazy(() => import('./pages/admin/errors'))} />
       <AdminRoute exact path="/admin/fouten/uitgever" component={lazy(() => import('./pages/admin/errors_publishers'))} />
+      <AdminRoute exact path="/admin/fouten/update/:status-:id" component={lazy(() => import('./pages/admin/error_update'))} />
+      <AdminRoute exact path="/admin/fouten/delete/:id" component={lazy(() => import('./pages/admin/error_delete'))} />
       <AdminRoute exact path="/admin/gebruiker-:id" component={lazy(() => import('./pages/admin/controlUser'))} />
 
       {/* 404 */}

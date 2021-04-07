@@ -9,7 +9,6 @@ const SidebarPage = ({ children, title, sidebarTitle, sidebarType }) => {
   // set sidebar links
   const accountLinks = [
     {title: 'Uw account', to: '/account', exact: true},
-    {title: 'Uw aanpassingen', to: '/account/aanpassingen', exact: true},
     {title: 'Uw boeken', to: '/account/boeken', exact: true}
   ]
   

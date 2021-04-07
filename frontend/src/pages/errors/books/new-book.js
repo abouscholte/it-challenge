@@ -94,7 +94,7 @@ function NewBook() {
             {errors.year_published && <FormControlError>{errors.year_published.message}</FormControlError>}
           </FormGroup>
           <FormGroup>
-            <FormLabel htmlFor="isbn">Wat is het ISBN nummer van het boek?</FormLabel>
+            <FormLabel htmlFor="isbn">Wat is het ISBN nummer van het boek? (In de vorm *-*-*-*-*)</FormLabel>
             <FormControl type="text" id="isbn" name="isbn" className={errors.isbn && 'error'} ref={register({
               required: 'Dit veld is verplicht!'
             })} />

@@ -25,7 +25,7 @@ class ErrorRapport {
   // read errors
   function read() {
     $query = "SELECT
-                f.id, f.type, f.hoofdstuk, f.paragraaf,
+                f.id as `fout_id`, f.type, f.hoofdstuk, f.paragraaf,
                 f.alinea, f.pagina, f.toelichting,
                 f.boek_id, f.gebruiker_id, f.status, b.id,
                 b.titel, b.auteur, b.uitgever

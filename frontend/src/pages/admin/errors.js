@@ -1,19 +1,23 @@
 import React, { useState, useEffect } from "react"
 import styled from "styled-components"
+import shortid from "shortid"
 import FetchErrors from "components/errors/fetch"
 import Page from "components/layout/sidebarPage"
 import Navbar from "components/layout/navbar/navbarLarge"
 import ErrorCard from "components/errors/errorCard"
+import Alert from "components/elements/alert"
 import { CardsSection } from "components/elements/cards"
-import { Link } from "react-router-dom"
+import { Link, useLocation } from "react-router-dom"
 import { Book } from "react-ionicons"
 
 export default function Errors() {
   // set constants and such
   const fetchErrors = FetchErrors()
+  const location = useLocation()
   const [errors, setErrors] = useState([])
   const [defaultErrors, setDefaultErrors] = useState([])
   const [filter, setFilter] = useState(false)
+  const [alert, setAlert] = useState({ visible: false, text: null })
   
   useEffect(() => {
     // set document title
@@ -22,7 +26,15 @@ export default function Errors() {
     // fetch errors
     setErrors(fetchErrors.filter((item) => item.status == 0))
     setDefaultErrors(fetchErrors)
-  }, [setErrors, fetchErrors, setDefaultErrors])
+
+    // set alert
+    if (location.state) {
+      setAlert({
+        visible: location.state.visible,
+        text: location.state.alert,
+      })
+    }
+  }, [setErrors, fetchErrors, setDefaultErrors, location])
 
   return (
     <React.Fragment>
@@ -32,12 +44,14 @@ export default function Errors() {
         <h1>Beheer alle foutenrapportages</h1>
         <p className="large">U ziet hieronder alle nieuwe, nog niet goedgekeurde foutenrapportages. Om alle goedgekeurde te zien, gebruik de filters hieronder.</p>
 
+        <Alert visible={alert.visible} text={alert.text} />
+
         {/* filter button group */}
         <div className="button-group filter-button-group">
           <a className={`button ${filter ? 'active' : 'inactive'}`} href="#" onClick={(e) => {
             e.preventDefault()
-            setFilter(filter ? false : true)
-            setErrors(filter
+            setFilter(filter == true ? false : true)
+            setErrors(filter == true
               ? defaultErrors.filter((item) => item.status == 0)
               : defaultErrors.filter((item) => item.status == 1)
             )
@@ -48,7 +62,9 @@ export default function Errors() {
         {/* cards section */}
         <CardsSection>
           {errors.length > 0 ? (
-            errors.map((item) => <ErrorCard key={item.id} item={item} />)
+            errors.map((item) => (
+              <ErrorCard key={shortid.generate()} item={item} />
+            ))
           ) : (
             <EmptySection>
               <Book />

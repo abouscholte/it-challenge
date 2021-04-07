@@ -7,7 +7,7 @@ import FetchErrors from "components/errors/fetchPublisher"
 import ErrorCard from "components/errors/errorCard"
 import { CardsSection } from "components/elements/cards"
 import { Link } from "react-router-dom"
-import { ArrowBackOutline, Car } from "react-ionicons"
+import { ArrowBackOutline } from "react-ionicons"
 
 export default function ErrorsPublisher() {
   // set state

@@ -6,9 +6,7 @@ import {
   FormControl, 
   FormControlError,
   FormSubmit,
-  FormLinks
 } from "components/elements/forms"
-import { Link } from "react-router-dom"
 
 const ChangePasswordForm = props => (
   <section style={{ position: 'relative', height: 170 }}>
@@ -24,9 +22,6 @@ const ChangePasswordForm = props => (
             {props.errors.oldPassword && <FormControlError>{props.errors.oldPassword.message}</FormControlError>}
           </FormGroup>
           <FormSubmit type="submit" value="Wijzig account" className="button" />
-          <FormLinks>
-            <Link to="/account/wachtwoord-vergeten">Wachtwoord vergeten?</Link>
-          </FormLinks>
         </OldPassForm>
       )
     }

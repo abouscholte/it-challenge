@@ -51,7 +51,7 @@ if (!empty($data->token)) {
       // add all error reports to the correct publisher
       foreach ($res as $row) {
         foreach($pub_arr['publishers'] as $key => $value) {
-          if ($key == $row['uitgever']) {
+          if ($key == $row['uitgever'] && $row['status'] == 1) {
             $error = array(
               "id" => $row['id'],
               "type" => $row['type'],

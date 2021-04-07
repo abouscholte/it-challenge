@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@material-ui/core": "^4.11.3",
+    "@react-pdf/renderer": "^2.0.0",
     "jwt-decode": "^3.1.2",
     "lodash": "^4.17.20",
     "node-fetch": "2.6.1",

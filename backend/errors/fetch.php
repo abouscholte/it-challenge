@@ -41,7 +41,7 @@ if (!empty($data->token)) {
     if ($num > 0) {
       while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
         $error = array(
-          "id" => $row['id'],
+          "id" => $row['fout_id'],
           "type" => $row['type'],
           "chapter" => $row['hoofdstuk'],
           "section" => $row['paragraaf'],
